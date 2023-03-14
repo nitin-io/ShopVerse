@@ -1,0 +1,35 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    display: grid;
+    place-content: center;
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-evenly;
+    padding: 1rem 10px;
+}
+
+nav ul{
+    list-style: none;
+    display: flex;
+}
+
+nav ul li {
+    padding: 5px 10px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
