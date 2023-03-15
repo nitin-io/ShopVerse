@@ -1,8 +1,16 @@
 import NavBar from "./../layout/NavBar";
 import { Link } from "react-router-dom";
 import Grid from "@mui/material/Grid";
+import { useState, useEffect } from "react";
 
 function Home() {
+
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    
+  }, [])
+
   return (
     <>
       <NavBar />

@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 import NavBar from "../layout/NavBar";
+// import axios from "axios";
 
 function Register() {
   const [inputValue, setInputValue] = useState({});
 
   async function handleSubmit(event) {
-
     event.preventDefault();
+
     console.log(inputValue);
     console.log(JSON.stringify(inputValue));
-    await fetch("http://127.0.0.1:8080/register", {
+    await fetch(`${process.env.API_BASE_URL}/register`, {
       method: "POST",
-      mode: "cors",
-      headers: { "content-type": "application/x-www-form-urlencoded" },
-      body: JSON.stringify(inputValue),
+      headers: {"content-type" : "application/json"},
+      body: {inputValue}
     });
   }
 

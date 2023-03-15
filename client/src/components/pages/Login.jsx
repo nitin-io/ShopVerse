@@ -7,26 +7,33 @@ function Login() {
 
   async function handleSubmit(event) {
     event.preventDefault();
+    const { email, password } = inputText;
 
-    const {email, password} = inputText;
-
-    const response = await fetch(`${process.env.API_URL}/login`, {
+    const response = await fetch(`${process.env.REACT_APP_BASE_URL}/login`, {
       method: "POST",
+      headers: {"content-type" : "application/json"},
       body: JSON.stringify({
         email,
         password,
       }),
     });
 
-    const data = response.json();
-    console.log(response);
-    console.log(data);
+    const data = await response.json();
+
+    if(data.token){
+      alert("Login successfully");
+      localStorage.setItem("token", data.token);
+    } else {
+      console.log(data)
+      alert("Password or Email is incorrect");
+    }
+     
   }
 
   function handleChange(event) {
     const { name, value } = event.target;
 
-    setInputText(prevValues => ({...prevValues, [name]: value}));
+    setInputText((prevValues) => ({ ...prevValues, [name]: value }));
   }
 
   return (
