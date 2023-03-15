@@ -5,12 +5,6 @@ import { useState, useEffect } from "react";
 
 function Home() {
 
-  const [user, setUser] = useState({});
-
-  useEffect(() => {
-    
-  }, [])
-
   return (
     <>
       <NavBar />
