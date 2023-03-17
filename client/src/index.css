@@ -5,18 +5,20 @@
 }
 
 body {
-    height: 100vh;
     display: grid;
     place-content: center;
 }
 
 nav {
-    position: fixed;
+    position: sticky;
     top: 0;
-    right: 0;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     padding: 1rem 10px;
+    background: #11111188;
+    backdrop-filter: blur(8px);
+    color: #fff;
+    margin-bottom: 55px;
 }
 
 nav ul{
@@ -24,8 +26,11 @@ nav ul{
     display: flex;
 }
 
-nav ul li {
+nav ul li a {
     padding: 5px 10px;
+    color: #fff;
+    text-decoration: none;
+    border: 1px solid white;
 }
 
 form {
@@ -33,3 +38,12 @@ form {
     flex-direction: column;
 }
 
+.product-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 20px;
+}
+
+.product-item {
+    border: 1px solid grey;
+}

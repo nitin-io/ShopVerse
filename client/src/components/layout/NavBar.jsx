@@ -7,7 +7,7 @@ const NavBar = () => {
 
   const logoStyle= {
     textDecoration: "none",
-    color: "black",
+    color: "#fff",
     pointer: "none",
     padding: "0.5rem"
   }

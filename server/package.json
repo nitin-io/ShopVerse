@@ -18,5 +18,8 @@
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.0.1"
-  }
+  },
+  "event": {
+    "crash": "sh -c 'lsof -i:5000 -t | xargs kill'"
+  } 
 }

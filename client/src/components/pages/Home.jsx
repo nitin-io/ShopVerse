@@ -2,18 +2,67 @@ import NavBar from "./../layout/NavBar";
 import { Link } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import { useState, useEffect } from "react";
+import Product from "./../Product";
 
 function Home() {
 
   return (
     <>
       <NavBar />
-      <Grid container>
-        <Grid xs={12} placeContent="center">
-          <h1>Home Component</h1>
-          <Link to="/login">Login</Link>
-        </Grid>
-      </Grid>
+      <div className="product-container">
+        <Product />
+        <Product />
+        <Product />
+        <Product />
+        <Product />
+        <Product />
+        <Product />
+        <Product />
+        <Product />
+        <Product />
+        <Product />
+        <Product />
+        <Product />
+        <Product />
+        <Product />
+        <Product />
+        <Product />
+        <Product />
+        <Product />
+        <Product />
+        <Product />
+        <Product />
+        <Product />
+        <Product />
+        <Product />
+        <Product />
+        <Product />
+        <Product />
+        <Product />
+        <Product />
+        <Product />
+        <Product />
+        <Product />
+        <Product />
+        <Product /> 
+        <Product /> 
+        <Product /> 
+        <Product /> 
+        <Product /> 
+        <Product /> 
+        <Product /> 
+        <Product /> 
+        <Product /> 
+        <Product /> 
+        <Product /> 
+        <Product /> 
+        <Product /> 
+        <Product /> 
+        <Product /> 
+        <Product /> 
+        <Product /> 
+        <Product /> 
+      </div>
     </>
   );
 }

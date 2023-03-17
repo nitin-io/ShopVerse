@@ -5,9 +5,11 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const User = require("./models/users-model");
 const Product = require("./models/products-model");
+const fs = require("fs");
 require("dotenv").config();
 const { default: mongoose } = require("mongoose");
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 5000;
+const userRoute = require("./routes/User");
 
 const app = express();
 app.use(express.json());
@@ -23,57 +25,43 @@ mongoose
     console.error(err);
   });
 
+app.use("/api", userRoute);
+
 app.get("/", async (req, res) => {
-  res.status(200).json({ message: "It's working send more!" });
+  const count = fs.readFileSync("count.txt", "utf-8");
+  const newCount = parseInt(count) + 1;
+  fs.writeFileSync("count.txt", `${newCount}`);
+
+  res.status(200).json({ message: "It's working!", serverVisit: newCount });
 });
 
-// Regitration
+// Product Management
 
-app.route("/register").post(async (req, res) => {
-  const { fName, lName, email, password } = req.body;
+app.post("/add-products", async (req, res) => {
+  const { name, price, description, image } = req.body;
+
   try {
-    const user = await User.findOne({ email });
-
-    if (user) {
-      res.status(401).json({ message: "User Already Exits" });
-    }
-    const hash = await bcrypt.hash(password, 10);
-
-    const newUser = new User({ fName, lName, email, hash });
-    await newUser.save();
-
-    res.status(200).json({ message: "Successfully Registered" });
+    const newProduct = new Product({
+      name,
+      price,
+      description,
+      category,
+      quantity,
+      image,
+    });
+    await newProduct.save();
+    res.status(200).json({ message: "Product added successfully" });
   } catch (error) {
     console.error(error);
   }
 });
 
-// Login
-
-app.post("/login", async (req, res) => {
-  const { email, password } = req.body;
-
+app.get("/products", async (req, res) => {
   try {
-    const user = await User.findOne({ email });
-
-    if (!user) {
-      res.status(401).json({ message: "User not found." });
-    }
-
-    const match = await bcrypt.compare(password, user.hash);
-
-    if (match) {
-      const token = await jwt.sign(
-        {
-          name: user.name,
-          email: user.email,
-        },
-        process.env.JWT_SECRET
-      );
-      res.status(200).json({ message: "Successfully login.", token: token });
-    } else {
-      res.status(401).json({ message: "Incorrect password." });
-    }
+    const products = await Product.find({});
+    res
+      .status(200)
+      .json({ message: "Product found successfully", products: products });
   } catch (error) {
     console.error(error);
   }
