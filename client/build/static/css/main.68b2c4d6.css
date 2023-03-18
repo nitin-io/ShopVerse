@@ -1,2 +1,0 @@
-*{box-sizing:border-box;margin:0;padding:0}body{display:grid;height:100vh;place-content:center}nav{justify-content:space-evenly;padding:1rem 10px;position:fixed;right:0;top:0}nav ul{display:flex;list-style:none}nav ul li{padding:5px 10px}form{flex-direction:column}form,nav{display:flex}nav{width:100%}
-/*# sourceMappingURL=main.68b2c4d6.css.map*/
