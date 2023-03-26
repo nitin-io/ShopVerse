@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import NavBar from "./../layout/NavBar";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 function Login() {
   const [inputText, setInputText] = useState({});
@@ -9,24 +10,26 @@ function Login() {
     event.preventDefault();
     const { email, password } = inputText;
 
-    const response = await fetch(`${process.env.REACT_APP_BASE_URL}/login`, {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({
+    // const response = await fetch(`${import.meta.env.VITE_BASE_API_URL_DEV}/api/login`, {
+    //   method: "POST",
+    //   headers: { "content-type": "application/json" },
+    //   body: JSON.stringify({
+    //     email,
+    //     password,
+    //   }),
+    // });
+
+    await axios
+      .post(`${import.meta.env.VITE_BASE_API_URL_DEV}/api/login`, {
         email,
         password,
-      }),
-    });
-
-    const data = await response.json();
-
-    if (data.token) {
-      alert("Login successfully");
-      localStorage.setItem("token", data.token);
-    } else {
-      console.log(data);
-      alert("Password or Email is incorrect");
-    }
+      })
+      .then((response) => {
+        localStorage.setItem("user", JSON.stringify(response.data));
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 
   function handleChange(event) {
@@ -58,7 +61,7 @@ function Login() {
           <button type="submit" className="btn">
             Login
           </button>
-        <Link to="/register">Create new account</Link>
+          <Link to="/register">Create new account</Link>
         </form>
       </main>
     </>

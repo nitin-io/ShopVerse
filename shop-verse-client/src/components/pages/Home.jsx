@@ -3,6 +3,7 @@ import NavBar from "../layout/NavBar";
 import ProductContainer from "../layout/ProductContainer";
 
 function Home() {
+
   return (
     <>
       <NavBar />

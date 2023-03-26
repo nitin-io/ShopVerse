@@ -19,8 +19,8 @@ const addUser = async (fName, lName, email, password) => {
   await newUser.save();
 };
 
-const generateToken = email => {
-  return jwt.sign({ email: email }, process.env.JWT_SECRET);
+const generateToken = (email) => {
+  return jwt.sign({ email }, process.env.JWT_SECRET);
 };
 
 const comparePwd = async (password, hash) => {

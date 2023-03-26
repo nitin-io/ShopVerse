@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import NavBar from "../layout/NavBar";
-// import axios from "axios";
 
 function Register() {
   const [inputValue, setInputValue] = useState({});
@@ -10,7 +9,7 @@ function Register() {
 
     console.log(inputValue);
     console.log(JSON.stringify(inputValue));
-    await fetch(`${process.env.API_BASE_URL}/register`, {
+    await fetch(`${import.meta.env.VITE_BASE_API_URL_DEV}/register`, {
       method: "POST",
       headers: {"content-type" : "application/json"},
       body: {inputValue}

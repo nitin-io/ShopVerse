@@ -6,6 +6,7 @@ import Cart from "./pages/Cart";
 import Wishlist from "./pages/Wishlist";
 import UserProfile from "./pages/UserProfile";
 import Register from "./pages/Register";
+import AddProduct from "./pages/AddProduct";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route exact path="/cart" element={<Cart />} />
         <Route exact path="/wishlist" element={<Wishlist />} />
         <Route exact path="/profile" element={<UserProfile />} />
+        <Route exact path="/add-new-product" element={<AddProduct />} />
       </Routes>
     </>
   );

@@ -1,15 +1,13 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
-const User = require("./models/users-model");
 const Product = require("./models/products-model");
 const fs = require("fs");
 require("dotenv").config();
 const { default: mongoose } = require("mongoose");
 const port = process.env.PORT || 5000;
 const userRoute = require("./routes/User");
+const productRoute = require("./routes/product");
 
 const app = express();
 app.use(express.json());
@@ -26,6 +24,7 @@ mongoose
   });
 
 app.use("/api", userRoute);
+app.use("/product", productRoute);
 
 app.get("/", async (req, res) => {
   const count = fs.readFileSync("count.txt", "utf-8");
@@ -36,25 +35,6 @@ app.get("/", async (req, res) => {
 });
 
 // Product Management
-
-app.post("/add-products", async (req, res) => {
-  const { name, price, description, image } = req.body;
-
-  try {
-    const newProduct = new Product({
-      name,
-      price,
-      description,
-      category,
-      quantity,
-      image,
-    });
-    await newProduct.save();
-    res.status(200).json({ message: "Product added successfully" });
-  } catch (error) {
-    console.error(error);
-  }
-});
 
 app.get("/products", async (req, res) => {
   try {
