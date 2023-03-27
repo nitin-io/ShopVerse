@@ -75,7 +75,7 @@ function AddProduct() {
             value={inputValues.category}
           >
             <option>Select a Category</option>
-            <option value="accesserios">accesserios</option>
+            <option value="accessories">accessories</option>
             <option value="mobile">mobile</option>
             <option value="computer">computer</option>
             <option value="book">book</option>
