@@ -34,19 +34,6 @@ app.get("/", async (req, res) => {
   res.status(200).json({ message: "It's working!", serverVisit: newCount });
 });
 
-// Product Management
-
-app.get("/products", async (req, res) => {
-  try {
-    const products = await Product.find({});
-    res
-      .status(200)
-      .json({ message: "Product found successfully", products: products });
-  } catch (error) {
-    console.error(error);
-  }
-});
-
 app.listen(port, () => {
   console.log(`Server is running on ${port}`);
 });

@@ -81,7 +81,7 @@ function AddProduct() {
             <option value="book">book</option>
             <option value="handmade">handmade</option>
           </select>
-          {/* <label htmlFor="product-images">Upload image</label>
+          <label htmlFor="product-images">Upload image</label>
           <input
             type="file"
             name="image"
@@ -90,7 +90,6 @@ function AddProduct() {
             disabled
             id="product-images"
           />
-          <p style={{ color: "red" }}>working on images</p> */}
           <button type="submit">Add</button>r
         </form>
       </main>

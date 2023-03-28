@@ -1,11 +1,14 @@
 const Product = require("./../models/products-model");
+const upload = require("./../service/multer");
 
 const addProduct = async (req, res) => {
     console.log(req.body);
     const {name, discription, price, category, quantity} = req.body;
-
+    
     try {
-        await Product.create({name, discription, price, category, quantity});
+        await upload.array("images");
+        const images = await req.files.map((file) => file.filename);
+        await Product.create({name, discription, price, category, images, quantity});
         res.status(200).json({message: "Successfully added product"});
         
     } catch (error) {
