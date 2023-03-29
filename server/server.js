@@ -1,8 +1,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const Product = require("./models/products-model");
 const fs = require("fs");
+const fileUpload = require("express-fileupload");
 require("dotenv").config();
 const { default: mongoose } = require("mongoose");
 const port = process.env.PORT || 5000;
@@ -12,6 +12,7 @@ const productRoute = require("./routes/product");
 const app = express();
 app.use(express.json());
 app.use(cors());
+app.use(fileUpload());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 mongoose

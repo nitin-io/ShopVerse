@@ -2,6 +2,12 @@ import { useEffect, useState } from "react";
 
 function AddProduct() {
   const [inputValues, setInputValues] = useState({});
+  const [images, setImages] = useState([]);
+
+  function handleImageChange(event) {
+    setImages(event.target.files);
+    console.log(images);
+  }
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -13,15 +19,22 @@ function AddProduct() {
   }
 
   async function handleSubmit(event) {
+    const form = event.target;
     event.preventDefault();
+    const formData = new FormData(form);
+
+    formData.append("details", { ...inputValues });
+
+    for (let i = 0; i < images.length; i++) {
+      formData.append("images", images[i]);
+    }
+
     const response = await fetch("http://127.0.0.1:5000/product/add", {
       method: "POST",
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify({
-        ...inputValues,
-      }),
+      body: { formData },
     });
     const data = await response.json();
     console.log(data);
@@ -31,7 +44,7 @@ function AddProduct() {
     <>
       <main>
         <h1>Add Product</h1>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} encType="multipart/form-data">
           <label htmlFor="product-name">Name*</label>
           <input
             type="text"
@@ -87,10 +100,10 @@ function AddProduct() {
             name="image"
             multiple
             accept="image/png, image/jpeg, image/jpg"
-            disabled
             id="product-images"
+            onChange={handleImageChange}
           />
-          <button type="submit">Add</button>r
+          <button type="submit">Add</button>
         </form>
       </main>
     </>
