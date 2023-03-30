@@ -1,7 +1,7 @@
-const Product = require("./../models/products-model");
-const upload = require("./../service/multer");
+import Product from "./../models/products-model.js";
+import upload from "./../service/multer.js";
 
-const addProduct = async (req, res) => {
+export const addProduct = async (req, res) => {
   console.log(req.body);
   console.log(req.files);
   const { name, discription, price, category, quantity } = req.body;
@@ -24,7 +24,7 @@ const addProduct = async (req, res) => {
   }
 };
 
-const showAllProducts = async (req, res) => {
+export const showAllProducts = async (req, res) => {
   try {
     const allProducts = await Product.find({});
     res.status(200).json({ allProducts });
@@ -33,5 +33,3 @@ const showAllProducts = async (req, res) => {
     res.status(500).json({ message: "internal server error" });
   }
 };
-
-module.exports = { addProduct, showAllProducts };
