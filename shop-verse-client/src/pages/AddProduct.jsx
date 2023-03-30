@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Layout } from "../components/layout/Layout";
 
 function AddProduct() {
   const [inputValues, setInputValues] = useState({});
@@ -42,7 +43,7 @@ function AddProduct() {
 
   return (
     <>
-      <main>
+      <Layout title="Add new product">
         <h1>Add Product</h1>
         <form onSubmit={handleSubmit} encType="multipart/form-data">
           <label htmlFor="product-name">Name*</label>
@@ -105,7 +106,7 @@ function AddProduct() {
           />
           <button type="submit">Add</button>
         </form>
-      </main>
+      </Layout>
     </>
   );
 }

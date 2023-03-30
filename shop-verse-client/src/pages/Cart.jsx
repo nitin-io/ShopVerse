@@ -1,18 +1,17 @@
 import React from "react";
-import NavBar from "./../layout/NavBar";
+import { Layout } from "../components/layout/Layout";
 
 function Cart() {
   return (
     <>
-      <NavBar />
-      <main>
+      <Layout title={"Shopping Cart"}>
         <ul>
           <li>This</li>
           <li>is</li>
           <li>Cart</li>
           <li>Component</li>
         </ul>
-      </main>
+      </Layout>
     </>
   );
 }

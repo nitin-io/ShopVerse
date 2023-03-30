@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import NavBar from "./../layout/NavBar";
+import { Layout } from "../../components/layout/Layout";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -40,8 +40,7 @@ function Login() {
 
   return (
     <>
-      <NavBar />
-      <main>
+      <Layout title={"Sign In"}>
         <form onSubmit={handleSubmit}>
           <h2>Sign in to your account</h2>
           <input
@@ -63,7 +62,7 @@ function Login() {
           </button>
           <Link to="/register">Create new account</Link>
         </form>
-      </main>
+      </Layout>
     </>
   );
 }

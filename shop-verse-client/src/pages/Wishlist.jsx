@@ -1,11 +1,10 @@
 import React from "react";
-import NavBar from "./../layout/NavBar";
+import { Layout } from "../components/layout/Layout";
 
 function Wishlist() {
   return (
     <>
-      <NavBar />
-      <main>
+      <Layout title={"Your Wishlist"}>
         <ul>
           <li>This</li>
           <li>is</li>
@@ -13,7 +12,7 @@ function Wishlist() {
           <li>Wishlist</li>
           <li>Component.</li>
         </ul>
-      </main>
+      </Layout>
     </>
   );
 }
