@@ -23,9 +23,7 @@ function Register() {
   // Get all disctrict when state changes
   async function getDistricts(stateName) {
     const response = await axios.get(
-      `${
-        import.meta.env.VITE_BASE_API_URL_DEV
-      }/api/v1/info/${stateName}/districts`
+      `${import.meta.env.VITE_BASE_API_URL}/api/v1/info/${stateName}/districts`
     );
     console.log(response.data.doc.districts);
     setDistricts(response.data.doc.districts);
@@ -42,7 +40,7 @@ function Register() {
     toast.success("Hello World");
 
     await axios.post(
-      `${import.meta.env.VITE_BASE_API_URL_DEV}/api/v1/auth/register`,
+      `${import.meta.env.VITE_BASE_API_URL}/api/v1/auth/register`,
       {
         ...inputValue,
       }
