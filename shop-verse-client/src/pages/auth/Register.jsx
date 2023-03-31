@@ -1,19 +1,46 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Layout } from "../../components/layout/Layout";
 import axios from "axios";
 import { toast } from "react-toastify";
-import states from "../../assets/statesAndDistricts.json";
 
 function Register() {
   const [inputValue, setInputValue] = useState({});
+  const [states, setStates] = useState([]);
   const [districts, setDistricts] = useState([]);
+
+  // Request to get all states on every refresh
+  async function getStates() {
+    const response = await axios.get(
+      `${import.meta.env.VITE_BASE_API_URL_DEV}/api/v1/info/states`
+    );
+    setStates(response.data);
+  }
+
+  useEffect(() => {
+    getStates();
+  });
+
+  // Get all disctrict when state changes
+  async function getDistricts(stateName) {
+    const response = await axios.get(
+      `${
+        import.meta.env.VITE_BASE_API_URL_DEV
+      }/api/v1/info/${stateName}/districts`
+    );
+    console.log(response.data.doc.districts);
+    setDistricts(response.data.doc.districts);
+  }
+
+  useEffect(() => {
+    getDistricts(inputValue.state);
+  }, [inputValue.state]);
+
+  // Change Districts based on selected State
 
   async function handleSubmit(event) {
     event.preventDefault();
     toast.success("Hello World");
 
-    console.log(inputValue);
-    console.log(JSON.stringify(inputValue));
     await axios.post(
       `${import.meta.env.VITE_BASE_API_URL_DEV}/api/v1/auth/register`,
       {
@@ -130,7 +157,7 @@ function Register() {
                 value={inputValue.state}
               >
                 <option selected>Select State</option>
-                {states.states.map((state) => {
+                {states.map((state) => {
                   return <option value={state.state}>{state.state}</option>;
                 })}
               </select>
@@ -147,7 +174,7 @@ function Register() {
                 value={inputValue.city}
               >
                 <option selected>Select Your City</option>
-                {states.states.districts.map((district) => {
+                {districts.map((district) => {
                   return <option value={district}>{district}</option>;
                 })}
               </select>

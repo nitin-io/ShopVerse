@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import userRoute from "./routes/userRoutes.js";
 import productRoute from "./routes/product.js";
 import connectDB from "./config/db.js";
+import infoRoutes from "./routes/infoRoutes.js";
 // const fileUpload = require("express-fileupload");
 
 // Config
@@ -21,6 +22,7 @@ app.use(cors());
 // app.use(fileUpload());
 
 app.use("/api/v1/auth", userRoute);
+app.use("/api/v1/info", infoRoutes);
 app.use("/product", productRoute);
 
 app.get("/", async (req, res) => {

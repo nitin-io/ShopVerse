@@ -1,4 +1,4 @@
-import Product from "./../models/products-model.js";
+import Product from "../models/productsModel.js";
 import upload from "./../service/multer.js";
 
 export const addProduct = async (req, res) => {
