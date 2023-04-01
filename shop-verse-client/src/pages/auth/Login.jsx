@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 function Login() {
-  const [inputText, setInputText] = useState({});
+  const [inputValues, setinputValues] = useState({});
 
   async function handleSubmit(event) {
     event.preventDefault();
-    const { email, password } = inputText;
+    const { email, password } = inputValues;
 
     // const response = await fetch(`${import.meta.env.VITE_BASE_API_URL_DEV}/api/login`, {
     //   method: "POST",
@@ -35,33 +35,43 @@ function Login() {
   function handleChange(event) {
     const { name, value } = event.target;
 
-    setInputText((prevValues) => ({ ...prevValues, [name]: value }));
+    setinputValues((prevValues) => ({ ...prevValues, [name]: value }));
   }
 
   return (
     <>
       <Layout title={"Sign In"}>
-        <form onSubmit={handleSubmit}>
-          <h2>Sign in to your account</h2>
-          <input
-            type="text"
-            name="email"
-            placeholder="Enter email address"
-            onChange={handleChange}
-            value={inputText.email}
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="Enter password"
-            onChange={handleChange}
-            value={inputText.password}
-          />
-          <button type="submit" className="btn">
-            Login
-          </button>
-          <Link to="/register">Create new account</Link>
-        </form>
+        <div class="container form-container">
+          <form onSubmit={handleSubmit} className="row m-auto p-3">
+            <h2>Sign in to your account</h2>
+            <label htmlFor="email" className="form-label">
+              Email address
+            </label>
+            <input
+              type="text"
+              name="email"
+              onChange={handleChange}
+              value={inputValues.email}
+              className="form-control"
+            />
+            <label htmlFor="password" className="form-label">
+              Password
+            </label>
+            <input
+              type="password"
+              name="password"
+              onChange={handleChange}
+              value={inputValues.password}
+              className="form-control"
+            />
+            <button type="submit" className="btn btn-primary mt-3">
+              Login
+            </button>
+            <Link to="/register" className="p-3">
+              Create new account
+            </Link>
+          </form>
+        </div>
       </Layout>
     </>
   );

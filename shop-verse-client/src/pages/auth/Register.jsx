@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
+import "./auth-style.css";
 import { Layout } from "../../components/layout/Layout";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
   const [inputValue, setInputValue] = useState({});
   const [states, setStates] = useState([]);
   const [districts, setDistricts] = useState([]);
+  const navigate = useNavigate();
 
   // Request to get all states on every refresh
   async function getStates() {
@@ -18,7 +21,7 @@ function Register() {
 
   useEffect(() => {
     getStates();
-  });
+  }, []);
 
   // Get all disctrict when state changes
   async function getDistricts(stateName) {
@@ -27,38 +30,45 @@ function Register() {
         import.meta.env.VITE_BASE_API_URL_DEV
       }/api/v1/info/${stateName}/districts`
     );
-    console.log(response.data.doc.districts);
     setDistricts(response.data.doc.districts);
   }
 
+  // Change Districts based on selected State
   useEffect(() => {
     getDistricts(inputValue.state);
   }, [inputValue.state]);
 
-  // Change Districts based on selected State
-
+  // Handling Submit Request
   async function handleSubmit(event) {
     event.preventDefault();
-    toast.success("Hello World");
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_API_URL_DEV}/api/v1/auth/register`,
+        {
+          ...inputValue,
+        }
+      );
 
-    await axios.post(
-      `${import.meta.env.VITE_BASE_API_URL_DEV}/api/v1/auth/register`,
-      {
-        ...inputValue,
+      if (response.data.success) {
+        toast.success(`${response.data.message}, Redirecting to Login Page`);
+        setTimeout(() => {
+          navigate("/login");
+        }, 6000);
       }
-    );
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
   }
   function handleChange(event) {
     const { name, value } = event.target;
 
     setInputValue((prevValue) => ({ ...prevValue, [name]: value }));
-    console.log(inputValue);
   }
 
   return (
     <>
       <Layout title={"Create new account"}>
-        <div className="container m-5">
+        <div className="container-lg form-container my-5 mx-auto">
           <form onSubmit={handleSubmit} className="register row mx-auto">
             <h2 className="my-4">Register Form</h2>
             <div className="col-sm-6">
@@ -125,6 +135,7 @@ function Register() {
                 id="password"
                 type="password"
                 name="password"
+                minLength={8}
                 required
                 value={inputValue.password}
                 onChange={handleChange}
@@ -158,7 +169,11 @@ function Register() {
               >
                 <option selected>Select State</option>
                 {states.map((state) => {
-                  return <option value={state.state}>{state.state}</option>;
+                  return (
+                    <option key={state._id} value={state.state}>
+                      {state.state}
+                    </option>
+                  );
                 })}
               </select>
             </div>
@@ -173,7 +188,7 @@ function Register() {
                 onChange={handleChange}
                 value={inputValue.city}
               >
-                <option selected>Select Your City</option>
+                <option selected>Select Your District</option>
                 {districts.map((district) => {
                   return <option value={district}>{district}</option>;
                 })}
@@ -195,8 +210,11 @@ function Register() {
               />
             </div>
 
-            <div className="col-md-12 mx-auto m-3">
-              <button className="btn btn-primary" type="submit">
+            <div class="col-md-12">
+              <button
+                className="btn btn-primary my-3 position-end "
+                type="submit"
+              >
                 Sign up
               </button>
             </div>

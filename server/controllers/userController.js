@@ -12,17 +12,60 @@ export const createNewUser = async (req, res) => {
     email,
     password,
     phone,
-    zipCode,
+    addressLine,
     state,
     city,
-    country,
+    zipCode,
   } = req.body;
 
   try {
+    if (!fName) {
+      return res.json({ message: "Name not found" });
+    }
+
+    if (!lName) {
+      return res.json({ message: "Last Name not found." });
+    }
+
+    if (!email) {
+      return res.json({ message: "Email not found." });
+    }
+
+    if (!password) {
+      return res.json({ message: "Password not found." });
+    }
+
+    if (password.length() < 8) {
+      return res.json({ message: "Password must include 8 characters." });
+    }
+
+    if (!phone) {
+      return res.json({ message: "Phone number not found." });
+    }
+
+    if (!state) {
+      return res.json({ message: "State not found." });
+    }
+
+    if (!city) {
+      return res.json({ message: "City not found." });
+    }
+
+    if (zipCode) {
+      return res.json({ message: "Zip Code not found." });
+    }
+
+    if (zipCode.length !== 6) {
+      return res.json({ message: "Invalid Zip Code" });
+    }
+
     const existingUser = await usersModel.findOne({ email });
 
     if (existingUser) {
-      res.status(409).json({ message: "user is already exist" });
+      return res.status(409).json({
+        success: false,
+        message: "User with this email is already exist",
+      });
     }
     const hashedPwd = await generateHash(password);
 
@@ -32,14 +75,19 @@ export const createNewUser = async (req, res) => {
       email,
       password: hashedPwd,
       phone,
-      address: { zipCode, state, city, country },
+      address: { addressLine, state, city, zipCode },
     });
     if (newUser) {
-      res.status(201).json({ message: "succefully created user", newUser }); // Created 201
+      return res.status(201).json({
+        success: true,
+        message: "Successfully created new user",
+        newUser,
+      }); // Created 201
     }
   } catch (error) {
-    console.log(`User creating error:${error}`.bgRed.white);
-    res.status(501).json({ message: "something is wrong", error });
+    return res
+      .status(501)
+      .json({ success: false, message: "something is wrong", error });
   }
 };
 
