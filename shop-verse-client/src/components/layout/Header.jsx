@@ -1,8 +1,15 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { FiShoppingCart } from "react-icons/fi";
+import { useAuth } from "../context/auth";
 
 export const Header = () => {
+  const [auth, setAuth] = useAuth();
+
+  function handleLogout() {
+    setAuth({ ...auth, user: null, token: "" });
+    localStorage.removeItem("auth");
+  }
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary sticky-top">
@@ -43,16 +50,30 @@ export const Header = () => {
                   Profile
                 </NavLink>
               </li>
-              <li className="nav-item">
-                <NavLink to="/login" className="nav-link">
-                  Login
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink to="/register" className="nav-link">
-                  Register
-                </NavLink>
-              </li>
+              {auth.user ? (
+                <li className="nav-item">
+                  <NavLink
+                    to="/login"
+                    className="nav-link"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </NavLink>
+                </li>
+              ) : (
+                <>
+                  <li className="nav-item">
+                    <NavLink to="/login" className="nav-link">
+                      Login
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink to="/register" className="nav-link">
+                      Register
+                    </NavLink>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
         </div>

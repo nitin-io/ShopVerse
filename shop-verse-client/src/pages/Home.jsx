@@ -1,15 +1,15 @@
-import SideBar from "../components/layout/SideBar";
 import { Layout } from "../components/layout/Layout";
 import ProductContainer from "../components/layout/ProductContainer";
+import { useAuth } from "./../components/context/auth.jsx";
 
 function Home() {
+  const [auth, setAuth] = useAuth();
+
   return (
     <>
       <Layout>
-        <div className="middle-container">
-          <SideBar />
-          <ProductContainer />
-        </div>
+        <h2>{`Hello Nitin`}</h2>
+        <ProductContainer />
       </Layout>
     </>
   );

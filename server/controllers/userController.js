@@ -35,7 +35,7 @@ export const createNewUser = async (req, res) => {
       return res.json({ message: "Password not found." });
     }
 
-    if (password.length() < 8) {
+    if (password.length < 8) {
       return res.json({ message: "Password must include 8 characters." });
     }
 
@@ -51,7 +51,7 @@ export const createNewUser = async (req, res) => {
       return res.json({ message: "City not found." });
     }
 
-    if (zipCode) {
+    if (!zipCode) {
       return res.json({ message: "Zip Code not found." });
     }
 
@@ -85,6 +85,7 @@ export const createNewUser = async (req, res) => {
       }); // Created 201
     }
   } catch (error) {
+    console.log(error);
     return res
       .status(501)
       .json({ success: false, message: "something is wrong", error });

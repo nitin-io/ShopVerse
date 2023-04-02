@@ -51,9 +51,12 @@ function Register() {
 
       if (response.data.success) {
         toast.success(`${response.data.message}, Redirecting to Login Page`);
+        setInputValue({});
         setTimeout(() => {
           navigate("/login");
         }, 6000);
+      } else if (!response.data.success) {
+        toast.error(`${response.data.message}`);
       }
     } catch (error) {
       toast.error(error.response.data.message);

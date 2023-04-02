@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Home from "../pages/Home";
 import Cart from "../pages/Cart";
 import Wishlist from "../pages/Wishlist";
-import UserProfile from "../pages/UserProfile";
+import Dashboard from "../pages/user/Dashboard";
 import { PageNotFound } from "../pages/PageNotFound";
 import AddProduct from "../pages/AddProduct";
 import Login from "../pages/auth/Login";
@@ -18,7 +18,7 @@ function App() {
         <Route exact path="/register" element={<Register />} />
         <Route exact path="/cart" element={<Cart />} />
         <Route exact path="/wishlist" element={<Wishlist />} />
-        <Route exact path="/profile" element={<UserProfile />} />
+        <Route exact path="/profile" element={<Dashboard />} />
         <Route exact path="/add-new-product" element={<AddProduct />} />
         <Route path="/*" element={<PageNotFound />} />
       </Routes>
