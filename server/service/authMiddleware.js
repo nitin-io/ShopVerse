@@ -22,12 +22,12 @@ export const isAdmin = async (req, res, next) => {
     }
 
     if (user.role !== 1) {
-      return res.status(401).json({ message: "UnAutherized Access" });
+      return res.status(401).json({ message: "UnAuthorized Access" });
     } else {
       next();
     }
   } catch (error) {
     console.log(`Error in Admin middleware ${error}`);
-    res.json({ message: "Error in admin middleware" });
+    res.json({ message: "UnAuthorized" });
   }
 };

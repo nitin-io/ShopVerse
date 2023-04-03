@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Product from "./../Product";
 
 function ProductContainer() {
-    const [products, setProducts] = useState([])
+  const [products, setProducts] = useState([]);
 
   async function renderProducts() {
     const response = await fetch(
@@ -17,17 +17,21 @@ function ProductContainer() {
   }, []);
 
   return (
-    <section className="product-container">
-      {products?.map((product) => {
-        return (
-          <Product
-            name={product.name}
-            price={product.price}
-            key={product._id}
-            id={product._id}
-          />
-        );
-      })}
+    <section className="container mx-auto my-5">
+      <div className="row g-4">
+        {products?.map((product) => {
+          return (
+            <div className="col-md-4">
+              <Product
+                name={product.name}
+                price={product.price}
+                key={product._id}
+                id={product._id}
+              />
+            </div>
+          );
+        })}
+      </div>
     </section>
   );
 }

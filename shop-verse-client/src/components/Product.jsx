@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { TbJewishStar, TbJewishStarFilled } from "react-icons/tb";
-// import TbJewishStarFilled from "react-icons/tb";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+// import AiOutlineHeartFilled from "react-icons/tb";
 
 function Product(props) {
   const [inWishlist, setInWishlist] = useState("false");
@@ -22,7 +22,7 @@ function Product(props) {
           onClick={handleWishlist}
           title="Add To Wishlist"
         >
-          <TbJewishStar />
+          <AiOutlineHeart />
         </button>
         <button className="btn">Add to cart</button>
       </div>

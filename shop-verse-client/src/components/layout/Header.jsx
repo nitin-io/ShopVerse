@@ -31,6 +31,11 @@ export const Header = () => {
             </NavLink>
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
               <li className="nav-item">
+                <NavLink to={"/profile"} className={"nav-link"}>
+                  Hello, {auth.user ? auth.user.fName : "User"}
+                </NavLink>
+              </li>
+              <li className="nav-item">
                 <NavLink to="/" className="nav-link" aria-current="page">
                   Home
                 </NavLink>
@@ -46,7 +51,7 @@ export const Header = () => {
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink to="/profile" className="nav-link">
+                <NavLink to="/dashboard" className="nav-link">
                   Profile
                 </NavLink>
               </li>
