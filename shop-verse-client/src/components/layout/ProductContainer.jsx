@@ -6,7 +6,7 @@ function ProductContainer() {
 
   async function renderProducts() {
     const response = await fetch(
-      `${import.meta.env.VITE_BASE_API_URL_DEV}/product/all`
+      `${import.meta.env.VITE_BASE_API_URL_DEV}/api/v1/product/products`
     );
     const data = await response.json();
     setProducts(data.allProducts);
