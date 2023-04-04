@@ -31,7 +31,10 @@ export const Header = () => {
             </NavLink>
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <NavLink to={"/profile"} className={"nav-link"}>
+                <NavLink
+                  to={`/dashboard/${auth?.user?.role === 1 ? "admin" : "user"}`}
+                  className={"nav-link"}
+                >
                   Hello, {auth.user ? auth.user.fName : "User"}
                 </NavLink>
               </li>
@@ -40,30 +43,38 @@ export const Header = () => {
                   Home
                 </NavLink>
               </li>
-              <li className="nav-item">
-                <NavLink to="/wishlist" className="nav-link">
-                  Wishlist
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink to="/cart" className="nav-link">
-                  Cart
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink to="/dashboard" className="nav-link">
-                  Profile
-                </NavLink>
-              </li>
               {auth.user ? (
-                <li className="nav-item">
-                  <NavLink
-                    to="/login"
-                    className="nav-link"
-                    onClick={handleLogout}
+                <li className="nav-item dropdown">
+                  <a
+                    className="nav-link dropdown-toggle"
+                    href="#"
+                    role="button"
+                    data-bs-toggle="dropdown"
                   >
-                    Logout
-                  </NavLink>
+                    User
+                  </a>
+                  <ul className="dropdown-menu">
+                    <li></li>
+                    <li>
+                      <NavLink
+                        className="dropdown-item"
+                        to={`/dashboard/${
+                          auth?.user?.role === 1 ? "admin" : "user"
+                        }`}
+                      >
+                        Dashboard
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        to="/login"
+                        className="dropdown-item"
+                        onClick={handleLogout}
+                      >
+                        Logout
+                      </NavLink>
+                    </li>
+                  </ul>
                 </li>
               ) : (
                 <>
@@ -79,6 +90,16 @@ export const Header = () => {
                   </li>
                 </>
               )}
+              <li className="nav-item">
+                <NavLink to="/wishlist" className="nav-link">
+                  Wishlist
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink to="/cart" className="nav-link">
+                  Cart
+                </NavLink>
+              </li>
             </ul>
           </div>
         </div>

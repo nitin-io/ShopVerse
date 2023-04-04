@@ -3,6 +3,8 @@ import { Layout } from "../../layout/Layout";
 import jwt_decode from "jwt-decode";
 import { json, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/auth";
+import UserMenu from "../../layout/UserMenu";
+
 function UserProfile() {
   const [auth, setAuth] = useAuth();
   const navigate = useNavigate();
@@ -12,14 +14,13 @@ function UserProfile() {
   return (
     <>
       <Layout title={"User - Dashboard"}>
-        <div>
-          <h1></h1>
-          <p>{auth.user ? JSON.stringify(auth.user.email) : "Not signed in"}</p>
-
-          <img
-            alt="User Profile"
-            src="https://picsum.photos/seed/picsum/200/300"
-          />
+        <div className="container">
+          <div className="row">
+            <div className="col-md-2">
+              <UserMenu />
+            </div>
+            <div className="col-md-10">User</div>
+          </div>
         </div>
       </Layout>
     </>

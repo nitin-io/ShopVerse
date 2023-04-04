@@ -18,8 +18,13 @@ router.post("/login", loginUser);
 // testing route for protected routes
 router.get("/test", verifySignIn, isAdmin, protectedRouteTest);
 
-// protect route verification for normal user
+// protect route verification for user
 router.get("/user-auth", verifySignIn, (req, res) => {
+  res.status(200).json({ ok: true });
+});
+
+// protect route verification for admin
+router.get("/admin-auth", verifySignIn, isAdmin, (req, res) => {
   res.status(200).json({ ok: true });
 });
 
