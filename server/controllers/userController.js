@@ -11,6 +11,7 @@ export const createNewUser = async (req, res) => {
     lName,
     email,
     password,
+    answer,
     phone,
     addressLine,
     state,
@@ -41,6 +42,9 @@ export const createNewUser = async (req, res) => {
 
     if (!phone) {
       return res.json({ message: "Phone number not found." });
+    }
+    if (!answer) {
+      return res.json({ message: "Answer is required" });
     }
 
     if (!state) {
@@ -73,6 +77,7 @@ export const createNewUser = async (req, res) => {
       fName,
       lName,
       email,
+      answer,
       password: hashedPwd,
       phone,
       address: { addressLine, state, city, zipCode },
@@ -132,4 +137,45 @@ export const loginUser = async (req, res) => {
 
 export const protectedRouteTest = (req, res) => {
   res.json({ message: "Protected Route" });
+};
+
+export const forgetPasswordController = async (req, res) => {
+  const { email, newPassword, answer } = req.body;
+
+  try {
+    if (!email) {
+      return res.status(422).json({ message: "Email Not Found" });
+    }
+    if (!newPassword) {
+      return res.status(422).json({ message: "New Password Not Found" });
+    }
+    if (newPassword.length < 8) {
+      return res
+        .status(422)
+        .json({ message: "Password length must be atleast 8 character long" });
+    }
+    if (!answer) {
+      return res.status(422).json({ message: "Answer Not Found" });
+    }
+
+    const user = await usersModel.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    if (user.answer !== answer) {
+      return res.status(401).json({ message: "Wrong answer" });
+    }
+    const hash = await generateHash(newPassword);
+    await usersModel.findByIdAndUpdate(user._id, { password: hash });
+    return res
+      .status(200)
+      .json({ success: true, message: "Password Changed Successfully." });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ message: "Internal server error, please try again later" });
+  }
 };

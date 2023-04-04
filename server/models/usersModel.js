@@ -12,6 +12,7 @@ const userSchema = new Schema(
       lowercase: true,
     },
     password: { type: String, required: true },
+    answer: { type: String, required: true, trim: true },
     address: {
       zipCode: { type: Number, required: true },
       state: { type: String, required: true },
