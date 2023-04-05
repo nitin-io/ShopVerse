@@ -6,7 +6,7 @@ import slugyfy from "slugify";
 
 export const createCategory = async (req, res) => {
   console.log(req.body);
-  const name = req.body.name;
+  const name = req.body.newCategory;
   try {
     const category = await categoryModel.findOne({ name });
 
@@ -15,7 +15,9 @@ export const createCategory = async (req, res) => {
     }
 
     await categoryModel.create({ name, slug: slugyfy(name) });
-    return res.status(200).json({ message: "Successfully created category" });
+    return res
+      .status(201)
+      .json({ success: true, message: "Successfully created category" });
   } catch (error) {
     console.log(`Error in category: ${error}`.bgRed.white);
     return res.status(500).json({ message: "Internal Server Error" });
@@ -27,7 +29,9 @@ export const createCategory = async (req, res) => {
 export const readCategories = async (req, res) => {
   try {
     const allCategories = await categoryModel.find({});
-    return res.status(200).json({ message: "Category sent", allCategories });
+    return res
+      .status(200)
+      .json({ success: true, message: "Category sent", allCategories });
   } catch (error) {
     console.log(error);
     return res
@@ -51,15 +55,22 @@ export const singleCategory = async (req, res) => {
 // Update
 
 export const updateCategory = async (req, res) => {
+  console.log(req.body);
   try {
-    const newName = req.body.newName;
+    const newName = req.body.name;
     const id = req.params.id;
-    const newDoc = await categoryModel.findByIdAndUpdate(id, {
-      name: newName,
-      slug: slugify(newName),
-    });
+    const newDoc = await categoryModel.findByIdAndUpdate(
+      id,
+      {
+        name: newName,
+        slug: slugify(newName),
+      },
+      { new: true }
+    );
     console.log(newDoc);
-    return res.status(201).json({ message: "Successfully update." });
+    return res
+      .status(201)
+      .json({ success: true, message: "Successfully update." });
   } catch (error) {
     console.log(error);
     return res.status(500).json({
@@ -75,7 +86,9 @@ export const deleteCategory = async (req, res) => {
   const id = req.params.id;
   try {
     await categoryModel.findByIdAndDelete(id);
-    return res.status(200).json({ message: "Successfully deleted" });
+    return res
+      .status(200)
+      .json({ success: true, message: "Successfully deleted" });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Error in deleting" });

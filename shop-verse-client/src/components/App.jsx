@@ -5,7 +5,6 @@ import Cart from "./pages/Cart";
 import Wishlist from "./pages/Wishlist";
 import Dashboard from "./pages/user/Dashboard";
 import { PageNotFound } from "./pages/PageNotFound";
-import AddProduct from "./pages/AddProduct";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import PrivateRoute from "./routes/PrivateRoute";
@@ -41,7 +40,6 @@ function App() {
         </Route>
         <Route path="/cart" element={<Cart />} />
         <Route path="/wishlist" element={<Wishlist />} />
-        <Route path="/add-new-product" element={<AddProduct />} />
         <Route path="/*" element={<PageNotFound />} />
       </Routes>
     </>

@@ -12,7 +12,7 @@ export const Header = () => {
   }
   return (
     <>
-      <nav className="navbar mx-4 navbar-expand-lg bg-body-tertiary sticky-top">
+      <nav className="navbar px-4 navbar-expand-lg bg-body-tertiary sticky-top">
         <div className="container-fluid">
           <button
             className="navbar-toggler"
