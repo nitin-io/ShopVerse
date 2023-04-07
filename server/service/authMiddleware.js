@@ -4,7 +4,7 @@ import usersModel from "../models/usersModel.js";
 export const verifySignIn = async (req, res, next) => {
   try {
     const decoded = await jwt.verify(
-      req.headers.authorization, //Authorization
+      req.headers.authorization,
       process.env.JWT_SECRET
     );
     req.user = decoded;

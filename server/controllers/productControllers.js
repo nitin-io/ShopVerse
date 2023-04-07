@@ -4,31 +4,36 @@ import productsModel from "../models/productsModel.js";
 // import upload from "../service/multer.js";
 
 export const addProduct = async (req, res) => {
-  console.log(req.fields);
-  console.log(req.files);
-  const { name, discription, price, category, quantity } = req.fields;
+  console.log("Add Product Controller");
+  const { name, description, price, category, quantity } = req.fields;
   const { images } = req.files;
-  console.log(images.size);
+  console.log(req.fields);
 
-  switch (true) {
-    case !name:
-      return res.status(401).json({ message: "Name is required" });
-    case !discription:
-      return res.status(401).json({ message: "Discription is required" });
-    case !price:
-      return res.status(401).json({ message: "Price is required" });
-    case !category:
-      return res.status(401).json({ message: "Category is required" });
-    case !quantity:
-      return res.status(401).json({ message: "Quantity is required" });
-    case !images && images.size > 5242880:
-      return res
-        .status(401)
-        .json({ message: "Image is required and be under size 5MB" });
+  if (!name) {
+    return res.status(401).json({ message: "Name is required" });
+  }
+  if (!description) {
+    return res.status(401).json({ message: "Description is required" });
+  }
+  if (!price) {
+    return res.status(401).json({ message: "Price is required" });
+  }
+  if (!category) {
+    return res.status(401).json({ message: "Category is required" });
+  }
+  if (!quantity) {
+    return res.status(401).json({ message: "Quantity is required" });
   }
 
+  if (!images) {
+    return res.status(401).json({ message: "Image is required" });
+  }
+  if (images.size > 5242880) {
+    return res
+      .status(401)
+      .json({ message: "Image is required and be under size 5MB" });
+  }
   try {
-    const slug = await slugify(name);
     const product = await productsModel({
       ...req.fields,
       slug: slugify(name),
