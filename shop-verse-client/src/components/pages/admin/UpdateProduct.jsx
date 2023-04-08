@@ -3,13 +3,28 @@ import AdminMenu from "../../layout/AdminMenu";
 import { Layout } from "../../layout/Layout";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-const CreateProduct = () => {
+const UpdataProduct = () => {
   const [values, setValues] = useState({});
   const [image, setImage] = useState("");
   const [categories, setCategories] = useState([]);
+  const [product, setProduct] = useState({});
   const navigate = useNavigate();
+  const params = useParams();
+
+  const fetchSingleProduct = async () => {
+    try {
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_BASE_API_URL_DEV}/api/v1/product/${params.slug}`
+      );
+      if (data.success) {
+        setValues(data.product);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,6 +48,7 @@ const CreateProduct = () => {
   };
 
   useEffect(() => {
+    fetchSingleProduct();
     fetchAllCategories();
   }, []);
 
@@ -199,4 +215,4 @@ const CreateProduct = () => {
   );
 };
 
-export default CreateProduct;
+export default UpdataProduct;

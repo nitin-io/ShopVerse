@@ -44,12 +44,18 @@ export const addProduct = async (req, res) => {
     }
 
     const createdProduct = await product.save();
-    res
-      .status(200)
-      .json({ message: "Successfully added product", createdProduct });
+    res.status(200).json({
+      success: true,
+      message: "Successfully added product",
+      createdProduct,
+    });
+
+    if (createdProduct) {
+      return console.log("Product Added Successfully " + createdProduct.name);
+    }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "server side error" });
+    return res.status(500).json({ message: "server side error" });
   }
 };
 
@@ -60,10 +66,10 @@ export const allProducts = async (req, res) => {
       .select("-images")
       .limit(12)
       .sort({ createdAt: -1 });
-    res.status(200).json({ allProducts });
+    return res.status(200).json({ success: true, allProducts });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "internal server error" });
+    return res.status(500).json({ message: "internal server error" });
   }
 };
 
@@ -87,11 +93,8 @@ export const imageController = async (req, res) => {
     const product = await productsModel
       .findById({ _id: req.params.pid })
       .select("images");
-    res.set("Content-Type", product.images.contentType);
-    res
-      .status(200)
-      .send(product.images.data)
-      .json({ message: "Request Completed" });
+    await res.set("Content-Type", product.images.contentType);
+    return res.status(200).send(product.images.data);
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: error.message });
