@@ -22,6 +22,18 @@ const Products = () => {
     }
   };
 
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(
+        `${import.meta.env.VITE_BASE_API_URL_DEV}/api/v1/product/delete/${id}`
+      );
+      toast.success("Product deleted successfully");
+      navigate("/dashboard/admin/products");
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
   useEffect(() => {
     fetchAllProducts();
   }, []);
@@ -63,6 +75,15 @@ const Products = () => {
                       <div className="card-body">
                         <h5 className="card-title">{product.name}</h5>
                         <div className="card-text">Rs {product.price}</div>
+                        <a
+                          href="#"
+                          class="btn btn-danger"
+                          onClick={() => {
+                            handleDelete(product._id);
+                          }}
+                        >
+                          Delete Product
+                        </a>
                       </div>
                     </div>
                   );

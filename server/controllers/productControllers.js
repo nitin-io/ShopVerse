@@ -147,3 +147,13 @@ export const updateProduct = async (req, res) => {
     res.status(500).json({ message: "server side error" });
   }
 };
+
+export const deleteProduct = async (req, res) => {
+  try {
+    await productsModel.findByIdAndRemove(req.params.id);
+    return res.status(200).json({ message: "Product is deleted successfully" });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Something is wrong" });
+  }
+};
