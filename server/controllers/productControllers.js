@@ -102,14 +102,14 @@ export const imageController = async (req, res) => {
 };
 
 export const updateProduct = async (req, res) => {
-  const { name, discription, price, category, quantity } = req.fields;
+  const { name, description, price, category, quantity } = req.fields;
   const { images } = req.files;
 
   switch (true) {
     case !name:
       return res.status(401).json({ message: "Name is required" });
-    case !discription:
-      return res.status(401).json({ message: "Discription is required" });
+    case !description:
+      return res.status(401).json({ message: "Description is required" });
     case !price:
       return res.status(401).json({ message: "Price is required" });
     case !category:
@@ -123,7 +123,6 @@ export const updateProduct = async (req, res) => {
   }
 
   try {
-    const slug = await slugify(name);
     const product = await productsModel.findByIdAndUpdate(
       { _id: req.params.pid },
       {
@@ -138,9 +137,11 @@ export const updateProduct = async (req, res) => {
     }
 
     const updatedProduct = await product.save();
-    res
-      .status(200)
-      .json({ message: "Successfully added product", updatedProduct });
+    res.status(200).json({
+      success: true,
+      message: "Successfully added product",
+      updatedProduct,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "server side error" });

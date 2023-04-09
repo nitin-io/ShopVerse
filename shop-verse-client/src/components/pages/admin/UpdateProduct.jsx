@@ -9,17 +9,25 @@ const UpdataProduct = () => {
   const [values, setValues] = useState({});
   const [image, setImage] = useState("");
   const [categories, setCategories] = useState([]);
-  const [product, setProduct] = useState({});
   const navigate = useNavigate();
   const params = useParams();
 
   const fetchSingleProduct = async () => {
     try {
       const { data } = await axios.get(
-        `${import.meta.env.VITE_BASE_API_URL_DEV}/api/v1/product/${params.slug}`
+        `${import.meta.env.VITE_BASE_API_URL_DEV}/api/v1/product/products/${
+          params.slug
+        }`
       );
       if (data.success) {
-        setValues(data.product);
+        setValues({
+          id: data.product._id,
+          name: data.product.name,
+          description: data.product.description,
+          price: data.product.price,
+          quantity: data.product.quantity,
+          category: data.product.category._id,
+        });
       }
     } catch (error) {
       toast.error(error.message);
@@ -42,7 +50,6 @@ const UpdataProduct = () => {
         toast.error(data.message);
       }
     } catch (error) {
-      console.log(error);
       toast.error(error.message);
     }
   };
@@ -55,8 +62,6 @@ const UpdataProduct = () => {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      console.log("Submit");
-      console.log(values);
       const productData = new FormData();
       productData.append("name", values.name);
       productData.append("description", values.description);
@@ -64,9 +69,10 @@ const UpdataProduct = () => {
       productData.append("quantity", values.quantity);
       productData.append("category", values.category);
       productData.append("images", image);
-      console.log(productData);
-      const { data } = await axios.post(
-        `${import.meta.env.VITE_BASE_API_URL_DEV}/api/v1/product/add-product`,
+      const { data } = await axios.put(
+        `${
+          import.meta.env.VITE_BASE_API_URL_DEV
+        }/api/v1/product/update-product/${values.id}`,
         productData
       );
       if (data.success) {
@@ -187,9 +193,18 @@ const UpdataProduct = () => {
                   <div className="form-text">Image size must be under 5MB</div>
                 </div>
                 <div className="col-md-12 mt-3">
-                  {image && (
+                  {image ? (
                     <img
                       src={URL.createObjectURL(image)}
+                      width={"200px"}
+                      alt="Product Image"
+                      className="img img-responsive"
+                    />
+                  ) : (
+                    <img
+                      src={`${
+                        import.meta.env.VITE_BASE_API_URL_DEV
+                      }/api/v1/product/images/${values.id}`}
                       width={"200px"}
                       alt="Product Image"
                       className="img img-responsive"
@@ -203,7 +218,7 @@ const UpdataProduct = () => {
                     className="btn btn-primary"
                     onClick={handleSubmit}
                   >
-                    Add Product
+                    Update Product
                   </button>
                 </div>
               </form>
