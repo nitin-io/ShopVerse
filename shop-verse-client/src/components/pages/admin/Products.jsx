@@ -60,7 +60,6 @@ const Products = () => {
                       className="card"
                       style={{
                         width: "18rem",
-                        objectFit: "cover",
                         padding: "0",
                       }}
                     >
@@ -70,20 +69,19 @@ const Products = () => {
                         }/api/v1/product/images/${product._id}`}
                         alt="product"
                         height={"200px"}
-                        className="card-img-top"
+                        className="card-img-top img-fluid"
                       />
                       <div className="card-body">
                         <h5 className="card-title">{product.name}</h5>
                         <div className="card-text">Rs {product.price}</div>
-                        <a
-                          href="#"
-                          class="btn btn-danger"
+                        <button
+                          className="btn btn-danger"
                           onClick={() => {
                             handleDelete(product._id);
                           }}
                         >
                           Delete Product
-                        </a>
+                        </button>
                       </div>
                     </div>
                   );

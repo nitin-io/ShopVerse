@@ -1,30 +1,32 @@
-import React, { useState } from "react";
-import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-// import AiOutlineHeartFilled from "react-icons/tb";
+import React from "react";
 
-function Product(props) {
-  const [inWishlist, setInWishlist] = useState("false");
-  function handleWishlist() {}
-
+function Product({ id, slug, name, price }) {
   return (
-    <div className="product-item" id={props.id}>
+    <div
+      onClick={() => {
+        navigate(`/dashboard/admin/update-product/${slug}`);
+      }}
+      className="card m-2"
+      style={{
+        width: "18rem",
+        padding: "0",
+      }}
+    >
       <img
-        src="https://picsum.photos/seed/picsum/200/300"
+        src={`${
+          import.meta.env.VITE_BASE_API_URL_DEV
+        }/api/v1/product/images/${id}`}
         alt="product"
-        height="200px"
-        width="300px"
+        height={"200px"}
+        className="card-img-top img-fluid"
       />
-      <h2>{props.name}</h2>
-      <h3>₹{props.price}</h3>
-      <div>
-        <button
-          className="btn"
-          onClick={handleWishlist}
-          title="Add To Wishlist"
-        >
-          <AiOutlineHeart />
-        </button>
-        <button className="btn">Add to cart</button>
+      <div className="card-body">
+        <h5 className="card-title">{name}</h5>
+        <div className="card-text">Rs.{price}</div>
+        <div>
+          <button className="btn btn-primary btn-sm">Add to Cart</button>
+          <button className="btn btn-primary btn-sm m-2">Buy Now</button>
+        </div>
       </div>
     </div>
   );
