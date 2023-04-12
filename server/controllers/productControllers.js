@@ -144,7 +144,7 @@ export const updateProduct = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "server side error" });
+    res.status(500).json({ message: "Error while updating the product" });
   }
 };
 
@@ -154,6 +154,24 @@ export const deleteProduct = async (req, res) => {
     return res.status(200).json({ message: "Product is deleted successfully" });
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ message: "Something is wrong" });
+    return res
+      .status(500)
+      .json({ message: "Something is wrong while deleting product" });
+  }
+};
+
+export const filterProductController = async (req, res) => {
+  try {
+    const { checked, radio } = req.body;
+    let args = {};
+    if (checked.length > 0) args.category = checked;
+    if (radio.length > 0) args.price = { $gte: radio[0], $lte: radio[1] };
+
+    const products = await productsModel.find(args).select("-images");
+
+    return res.status(200).json({ sucess: true, products });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Error in filtering products" });
   }
 };

@@ -8,7 +8,7 @@ function Product({ id, slug, name, price }) {
       }}
       className="card m-2"
       style={{
-        width: "18rem",
+        width: "15rem",
         padding: "0",
       }}
     >

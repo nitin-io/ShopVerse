@@ -6,6 +6,7 @@ import {
   singleProduct,
   updateProduct,
   deleteProduct,
+  filterProductController,
 } from "../controllers/productControllers.js";
 import { isAdmin, verifySignIn } from "../service/authMiddleware.js";
 import ExpressFormidable from "express-formidable";
@@ -34,6 +35,9 @@ router.put(
   updateProduct
 );
 
+// Product Delete Route
 router.delete("/delete/:id", verifySignIn, isAdmin, deleteProduct);
+
+router.post("/filter", filterProductController);
 
 export default router;
