@@ -2,9 +2,11 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { FiShoppingCart } from "react-icons/fi";
 import { useAuth } from "../context/auth";
+import { useCart } from "../context/cartContext";
 
 export const Header = () => {
   const [auth, setAuth] = useAuth();
+  const [cart] = useCart();
 
   function handleLogout() {
     setAuth({ ...auth, user: null, token: "" });
@@ -97,7 +99,7 @@ export const Header = () => {
               </li>
               <li className="nav-item">
                 <NavLink to="/cart" className="nav-link">
-                  Cart
+                  Cart({cart?.length})
                 </NavLink>
               </li>
             </ul>

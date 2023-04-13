@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { Prices } from "../Price";
+import { useCart } from "../context/cartContext";
 
 function Home() {
   const [products, setProducts] = useState([]);
@@ -12,6 +13,7 @@ function Home() {
   const [categories, setCategories] = useState([]);
   const [checked, setChecked] = useState([]);
   const [radio, setRadio] = useState([]);
+  const [cart, setCart] = useCart();
 
   const loadMore = () => {
     setProductCounter(productCounter + 5);
@@ -69,6 +71,14 @@ function Home() {
     } catch (error) {
       console.log(error);
       toast.error(error.message);
+    }
+  };
+
+  const handleCart = (product) => {
+    try {
+      setCart(...cart, product);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -139,10 +149,8 @@ function Home() {
                     return (
                       <Product
                         key={product._id}
-                        name={product.name}
-                        slug={product.slug}
-                        price={product.price}
                         id={product._id}
+                        product={product}
                       />
                     );
                   })}
