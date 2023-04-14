@@ -1,11 +1,29 @@
 import React from "react";
 import { Layout } from "../layout/Layout";
 import { useCart } from "../context/cartContext";
+import { useAuth } from "../context/auth";
+import { useNavigate } from "react-router-dom";
 
 function Cart() {
   const [cart, setCart] = useCart();
+  const [auth, setAuth] = useAuth();
+  const navigate = useNavigate();
 
-  console.log(cart);
+  const handleCartItem = (pid) => {
+    try {
+      let myCart = [...cart];
+      console.log(cart);
+      let index = myCart.findIndex((cartItem) => cartItem._id === pid);
+      console.log(index);
+      myCart.splice(index, 1);
+      console.log(myCart);
+      setCart(myCart);
+      localStorage.setItem("cart", JSON.stringify(myCart));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <Layout title={"Shopping Cart"}>
@@ -15,10 +33,11 @@ function Cart() {
         <div className="container-fluid">
           <div className="row">
             <div className="col-md-8">
+              {auth?.token && auth?.user?.name}
               <div className="container">
-                {cart?.map((product, index) => {
+                {cart?.map((product) => {
                   return (
-                    <div className="row">
+                    <div className="row" key={product._id}>
                       <div className="col-md-4">
                         <img
                           src={`${
@@ -39,7 +58,7 @@ function Cart() {
                         <button
                           className="btn btn-danger btn-sm"
                           onClick={() => {
-                            setCart();
+                            handleCartItem(product?._id);
                           }}
                         >
                           Remove

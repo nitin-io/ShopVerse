@@ -74,14 +74,6 @@ function Home() {
     }
   };
 
-  const handleCart = (product) => {
-    try {
-      setCart(...cart, product);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
     if (radio.length > 0 || checked.length > 0) fetchFilterProducts();
   }, [checked, radio]);

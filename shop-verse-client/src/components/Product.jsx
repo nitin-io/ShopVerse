@@ -33,7 +33,7 @@ function Product({ product }) {
             className="btn btn-primary btn-sm"
             onClick={() => {
               setCart([...cart, product]);
-              localStorage.setItem("cart", JSON.stringify(cart));
+              localStorage.setItem("cart", JSON.stringify([...cart, product]));
               toast.success("Successfully Added Product in Cart");
             }}
           >
