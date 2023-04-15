@@ -12,11 +12,8 @@ function Cart() {
   const handleCartItem = (pid) => {
     try {
       let myCart = [...cart];
-      console.log(cart);
       let index = myCart.findIndex((cartItem) => cartItem._id === pid);
-      console.log(index);
       myCart.splice(index, 1);
-      console.log(myCart);
       setCart(myCart);
       localStorage.setItem("cart", JSON.stringify(myCart));
     } catch (error) {

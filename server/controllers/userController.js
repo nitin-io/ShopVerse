@@ -180,3 +180,48 @@ export const forgetPasswordController = async (req, res) => {
       .json({ message: "Internal server error, please try again later" });
   }
 };
+
+export const updateUserController = async (req, res) => {
+  try {
+    const { fName, lName, password, phone, address } = req.body;
+    const { addressLine, state, city, zipCode } = address;
+    const user = await usersModel.findById(req.user.id);
+    if (password && password.length < 8) {
+      return res
+        .status(301)
+        .json({ message: "Password must be 8 character long." });
+    }
+    const updatedUser = await usersModel.findByIdAndUpdate(
+      req.user.id,
+      {
+        fName: fName || user.fName,
+        lName: lName || user.lName,
+        phone: phone || user.phone,
+        address: {
+          addressLine: addressLine || user.address?.addressLine,
+          state: state || user.address?.state,
+          city: city || user.address?.city,
+          zipCode: zipCode || user.address?.zipCode,
+        },
+      },
+      { new: true }
+    );
+
+    console.log(updatedUser.phone);
+    return res.status(200).json({
+      success: true,
+      message: "Successfully updated information",
+      user: {
+        fName: updatedUser.fName,
+        lName: updatedUser.lName,
+        email: updatedUser.email,
+        address: updatedUser.address,
+        phone: updatedUser.phone,
+        role: updatedUser.role,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ message: "Something is wrong" });
+  }
+};

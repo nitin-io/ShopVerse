@@ -11,9 +11,11 @@ const userSchema = new Schema(
       trim: true,
       lowercase: true,
     },
+    phone: { type: Number, required: true, trim: true },
     password: { type: String, required: true },
     answer: { type: String, required: true, trim: true },
     address: {
+      addressLine: { type: String, required: true },
       zipCode: { type: Number, required: true },
       state: { type: String, required: true },
       city: { type: String, required: true },

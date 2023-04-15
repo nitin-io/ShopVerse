@@ -4,13 +4,17 @@ import {
   loginUser,
   protectedRouteTest,
   forgetPasswordController,
+  updateUserController,
 } from "../controllers/userController.js";
 import { isAdmin, verifySignIn } from "../service/authMiddleware.js";
 
 const router = Router();
 
-// Add new user to database
+// Add new user
 router.post("/register", createNewUser);
+
+// Update user
+router.put("/profile", verifySignIn, updateUserController);
 
 // Sends back user details and jwt token
 router.post("/login", loginUser);

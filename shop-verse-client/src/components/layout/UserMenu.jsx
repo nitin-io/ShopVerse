@@ -6,12 +6,6 @@ const UserMenu = () => {
     <>
       <div className="list-group">
         <NavLink
-          to="/dashboard/user"
-          className="list-group-item list-group-item-action"
-        >
-          User
-        </NavLink>
-        <NavLink
           to="/dashboard/user/profile"
           className="list-group-item list-group-item-action"
         >
