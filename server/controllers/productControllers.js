@@ -1,8 +1,18 @@
 import slugify from "slugify";
 import fs from "fs";
 import productsModel from "../models/productsModel.js";
+import orderModel from "../models/orderModel.js";
+import braintree from "braintree";
+import dotenv from "dotenv";
 // import upload from "../service/multer.js";
-
+dotenv.config();
+// Payment Gateway
+const gateway = new braintree.BraintreeGateway({
+  environment: braintree.Environment.Sandbox,
+  merchantId: process.env.BRAINTREE_MERCHANT_ID,
+  publicKey: process.env.BRAINTREE_PUBLIC_KEY,
+  privateKey: process.env.BRAINTREE_PRIVATE_KEY,
+});
 export const addProduct = async (req, res) => {
   console.log("Add Product Controller");
   const { name, description, price, category, quantity } = req.fields;
@@ -173,5 +183,51 @@ export const filterProductController = async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Error in filtering products" });
+  }
+};
+
+export const braintreeTokenController = () => {
+  try {
+    gateway.clientToken.generate({}, (err, response) => {
+      if (err) {
+        return res.json({ err });
+      } else {
+        return res.json({ response });
+      }
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Something is wrong" });
+  }
+};
+
+export const braintreePaymentController = () => {
+  try {
+    const { cart, nonce } = req.body;
+    const total = cart.reduce((total, cart) => total + cart.price);
+    let newTransaction = gateway.transaction.sale(
+      {
+        amount: total,
+        paymentMethodNonce: nonce,
+        options: {
+          submitForSettlement: true,
+        },
+      },
+      (error, response) => {
+        if (response) {
+          const order = new orderModel({
+            products: cart,
+            payment: response,
+            buyer: req.user.id,
+          }).save();
+          return res.status(200).json({ ok: true });
+        } else {
+          return res.status(500).json({ error });
+        }
+      }
+    );
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Something is wrong" });
   }
 };

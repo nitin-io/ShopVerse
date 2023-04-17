@@ -7,6 +7,8 @@ import {
   updateProduct,
   deleteProduct,
   filterProductController,
+  braintreeTokenController,
+  braintreePaymentController,
 } from "../controllers/productControllers.js";
 import { isAdmin, verifySignIn } from "../service/authMiddleware.js";
 import ExpressFormidable from "express-formidable";
@@ -38,6 +40,13 @@ router.put(
 // Product Delete Route
 router.delete("/delete/:id", verifySignIn, isAdmin, deleteProduct);
 
+// Product filtering route
 router.post("/filter", filterProductController);
+
+// Payment Token Route
+router.get("/braintree/token", braintreeTokenController);
+
+// Payment Route
+router.post("/braintree/payment", verifySignIn, braintreePaymentController);
 
 export default router;

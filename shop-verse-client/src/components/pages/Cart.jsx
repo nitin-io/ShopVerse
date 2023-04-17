@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 function Cart() {
   const [cart, setCart] = useCart();
   const [auth, setAuth] = useAuth();
+
   const navigate = useNavigate();
 
   const handleCartItem = (pid) => {
@@ -87,6 +88,36 @@ function Cart() {
                     40
                 )}
               </h5>
+              {auth?.user?.address ? (
+                <>
+                  <div>
+                    <h4>Current Address</h4>
+                    <p>Address: {auth?.user?.address?.addressLine}</p>
+                    <p>City: {auth?.user?.address?.city}</p>
+                    <p>State: {auth?.user?.address?.state}</p>
+                    <p>Zip Code: {auth?.user?.address?.zipCode}</p>
+                    <button
+                      className="btn btn-outline-warning"
+                      onClick={() => {
+                        navigate("/dashboard/user/profile");
+                      }}
+                    >
+                      Update Address
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <button
+                    className="btn btn-outline-warning"
+                    onClick={() => {
+                      navigate("/login", { state: "/cart" });
+                    }}
+                  >
+                    Login To Checkout
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>
