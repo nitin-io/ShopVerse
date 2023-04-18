@@ -186,7 +186,7 @@ export const filterProductController = async (req, res) => {
   }
 };
 
-export const braintreeTokenController = () => {
+export const braintreeTokenController = (req, res) => {
   try {
     gateway.clientToken.generate({}, (err, response) => {
       if (err) {
@@ -201,31 +201,32 @@ export const braintreeTokenController = () => {
   }
 };
 
-export const braintreePaymentController = () => {
+export const braintreePaymentController = async (req, res) => {
   try {
     const { cart, nonce } = req.body;
-    const total = cart.reduce((total, cart) => total + cart.price);
-    let newTransaction = gateway.transaction.sale(
-      {
-        amount: total,
-        paymentMethodNonce: nonce,
-        options: {
-          submitForSettlement: true,
-        },
-      },
-      (error, response) => {
-        if (response) {
-          const order = new orderModel({
-            products: cart,
-            payment: response,
-            buyer: req.user.id,
-          }).save();
-          return res.status(200).json({ ok: true });
-        } else {
-          return res.status(500).json({ error });
-        }
-      }
+    const totalPrice = await cart.reduce(
+      (total, cart) => total + cart.price,
+      0
     );
+    console.log(cart);
+    let newTransaction = await gateway.transaction.sale({
+      amount: totalPrice,
+      paymentMethodNonce: nonce,
+      options: {
+        submitForSettlement: true,
+      },
+    });
+    if (newTransaction.success) {
+      const order = new orderModel({
+        products: cart,
+        payment: newTransaction,
+        buyer: req.user.id,
+      });
+      await order.save();
+      return res.status(200).json({ ok: true });
+    } else {
+      return res.status(500).json({ error: newTransaction.message });
+    }
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Something is wrong" });
