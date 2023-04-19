@@ -116,7 +116,6 @@ function Cart() {
               </div>
             </div>
             <div className="col-md-4">
-              <h5>Shipping Charge: ₹40</h5>
               <h5>
                 Products Price:
                 {Intl.NumberFormat("en-IN", {
@@ -132,8 +131,7 @@ function Cart() {
                   style: "currency",
                   currency: "INR",
                 }).format(
-                  cart?.reduce((total, product) => total + product.price, 0) +
-                    40
+                  cart?.reduce((total, product) => total + product.price, 0)
                 )}
               </h5>
               {auth?.user?.address ? (

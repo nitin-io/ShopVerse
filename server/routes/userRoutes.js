@@ -5,6 +5,7 @@ import {
   protectedRouteTest,
   forgetPasswordController,
   updateUserController,
+  fetchOrdersController,
 } from "../controllers/userController.js";
 import { isAdmin, verifySignIn } from "../service/authMiddleware.js";
 
@@ -34,5 +35,8 @@ router.get("/admin-auth", verifySignIn, isAdmin, (req, res) => {
 
 // Route to update password in case user forget their password
 router.post("/forget-password", forgetPasswordController);
+
+// Orders route
+router.get("/orders", verifySignIn, fetchOrdersController);
 
 export default router;

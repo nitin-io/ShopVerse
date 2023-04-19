@@ -1,3 +1,4 @@
+import orderModel from "../models/orderModel.js";
 import usersModel from "../models/usersModel.js";
 import {
   generateToken,
@@ -223,5 +224,20 @@ export const updateUserController = async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(400).json({ message: "Something is wrong" });
+  }
+};
+
+export const fetchOrdersController = async (req, res) => {
+  try {
+    console.log("Orders Fetching...");
+    const orders = await orderModel
+      .find({ buyer: req.user.id })
+      .populate("products", "-images")
+      .populate("buyer", "name");
+    console.log(orders);
+    return res.status(200).json({ orders });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Error while fetching orders" });
   }
 };
