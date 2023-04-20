@@ -4,6 +4,8 @@ import AdminMenu from "../../layout/AdminMenu";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useAuth } from "../../context/auth";
+import { Select } from "antd";
+const { Option } = Select;
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
@@ -15,7 +17,6 @@ const Orders = () => {
     "Canceled",
   ]);
   const [auth, setAuth] = useAuth();
-  const [changedStatus, setChangedStatus] = useState("");
 
   const fetchAllOrder = async () => {
     try {
@@ -35,7 +36,6 @@ const Orders = () => {
 
   const handleChange = async (orderId, status) => {
     try {
-      console.log(status);
       await axios.put(
         `${
           import.meta.env.VITE_BASE_API_URL_DEV
@@ -49,7 +49,6 @@ const Orders = () => {
     }
   };
 
-  console.log(orders);
   return (
     <>
       <Layout>
@@ -74,20 +73,17 @@ const Orders = () => {
                       <tr>
                         <th scope="row">{i + 1}</th>
                         <td>
-                          <select
-                            value={order.status}
-                            onChange={(e) => {
-                              handleChange(order._id, e.target.value);
-                            }}
+                          <Select
+                            bordered={false}
+                            onChange={(value) => handleChange(order._id, value)}
+                            defaultValue={order?.status}
                           >
-                            {status?.map((status, index) => {
-                              return (
-                                <option key={index} value={status}>
-                                  {status}
-                                </option>
-                              );
-                            })}
-                          </select>
+                            {status?.map((status, index) => (
+                              <Option key={index} value={status}>
+                                {status}
+                              </Option>
+                            ))}
+                          </Select>
                         </td>
                         <td>{order.createdAt}</td>
                         <td>

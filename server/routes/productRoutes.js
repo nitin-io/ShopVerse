@@ -9,6 +9,7 @@ import {
   filterProductController,
   braintreeTokenController,
   braintreePaymentController,
+  searchProductController,
 } from "../controllers/productControllers.js";
 import { isAdmin, verifySignIn } from "../service/authMiddleware.js";
 import ExpressFormidable from "express-formidable";
@@ -48,5 +49,8 @@ router.get("/braintree/token", braintreeTokenController);
 
 // Payment Route
 router.post("/braintree/payment", verifySignIn, braintreePaymentController);
+
+// Searh Product
+router.get("/search/:keyword", searchProductController);
 
 export default router;

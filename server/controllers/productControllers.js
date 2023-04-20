@@ -232,3 +232,23 @@ export const braintreePaymentController = async (req, res) => {
     return res.status(500).json({ message: "Something is wrong" });
   }
 };
+
+export const searchProductController = async (req, res) => {
+  try {
+    const { keyword } = req.params;
+    const products = await productsModel
+      .find({
+        $or: [
+          { name: { $regex: keyword, $options: "i" } },
+          { discription: { $regex: keyword, $options: "i" } },
+        ],
+      })
+      .select("-images");
+    return res.status(200).json({ products });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ message: "Error while getting searched products" });
+  }
+};
