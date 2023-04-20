@@ -241,3 +241,39 @@ export const fetchOrdersController = async (req, res) => {
     return res.status(500).json({ message: "Error while fetching orders" });
   }
 };
+
+export const fetchAllOrdersController = async (req, res) => {
+  try {
+    const orders = await orderModel
+      .find({})
+      .populate("products", "-images")
+      .populate("buyer", "name")
+      .sort({ createdAt: "-1" });
+
+    return res.status(200).json({ orders });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Error while fetching all orders" });
+  }
+};
+
+export const updateOrderStatusController = async (req, res) => {
+  try {
+    const { orderId } = req.params;
+    const { status } = req.body;
+    console.log(status);
+    const order = await orderModel.findByIdAndUpdate(
+      orderId,
+      { status },
+      { new: true }
+    );
+    return res
+      .status(200)
+      .json({ message: "Order Status Changed Succefully", order });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ message: "Error while updating order status" });
+  }
+};

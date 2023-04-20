@@ -1,18 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { Layout } from "../../layout/Layout";
-import UserMenu from "../../layout/UserMenu";
+import AdminMenu from "../../layout/AdminMenu";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useAuth } from "../../context/auth";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
+  const [status, setStatus] = useState([
+    "Not in process",
+    "In process",
+    "Shipped",
+    "Delivered",
+    "Canceled",
+  ]);
   const [auth, setAuth] = useAuth();
+  const [changedStatus, setChangedStatus] = useState("");
 
   const fetchAllOrder = async () => {
     try {
       const { data } = await axios(
-        `${import.meta.env.VITE_BASE_API_URL_DEV}/api/v1/auth/orders`
+        `${import.meta.env.VITE_BASE_API_URL_DEV}/api/v1/auth/admin-orders`
       );
       setOrders(data.orders);
     } catch (error) {
@@ -25,6 +33,22 @@ const Orders = () => {
     if (auth?.token) fetchAllOrder();
   }, [auth?.token]);
 
+  const handleChange = async (orderId, status) => {
+    try {
+      console.log(status);
+      await axios.put(
+        `${
+          import.meta.env.VITE_BASE_API_URL_DEV
+        }/api/v1/auth/update-status/${orderId}`,
+        { status }
+      );
+      toast.success("Status updated successfully");
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  };
+
   console.log(orders);
   return (
     <>
@@ -32,7 +56,7 @@ const Orders = () => {
         <div className="container">
           <div className="row">
             <div className="col-md-2">
-              <UserMenu />
+              <AdminMenu />
             </div>
             <div className="col-md-10">
               {orders?.map((order, i) => {
@@ -49,7 +73,22 @@ const Orders = () => {
                     <tbody>
                       <tr>
                         <th scope="row">{i + 1}</th>
-                        <td>{order.status}</td>
+                        <td>
+                          <select
+                            value={order.status}
+                            onChange={(e) => {
+                              handleChange(order._id, e.target.value);
+                            }}
+                          >
+                            {status?.map((status, index) => {
+                              return (
+                                <option key={index} value={status}>
+                                  {status}
+                                </option>
+                              );
+                            })}
+                          </select>
+                        </td>
                         <td>{order.createdAt}</td>
                         <td>
                           {order.payment?.success

@@ -6,6 +6,8 @@ import {
   forgetPasswordController,
   updateUserController,
   fetchOrdersController,
+  fetchAllOrdersController,
+  updateOrderStatusController,
 } from "../controllers/userController.js";
 import { isAdmin, verifySignIn } from "../service/authMiddleware.js";
 
@@ -38,5 +40,16 @@ router.post("/forget-password", forgetPasswordController);
 
 // Orders route
 router.get("/orders", verifySignIn, fetchOrdersController);
+
+// Admin Orders
+router.get("/admin-orders", verifySignIn, isAdmin, fetchAllOrdersController);
+
+// Update Order Status
+router.put(
+  "/update-status/:orderId",
+  verifySignIn,
+  isAdmin,
+  updateOrderStatusController
+);
 
 export default router;
