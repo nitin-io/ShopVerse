@@ -6,14 +6,17 @@ import App from "./components/App";
 import "./index.css";
 import "antd/dist/reset.css";
 import { CartProvider } from "./components/context/cartContext";
+import { SearchProvider } from "./components/context/search";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
       <CartProvider>
-        <AuthProvider>
-          <App />
-        </AuthProvider>
+        <SearchProvider>
+          <AuthProvider>
+            <App />
+          </AuthProvider>
+        </SearchProvider>
       </CartProvider>
     </BrowserRouter>
   </React.StrictMode>

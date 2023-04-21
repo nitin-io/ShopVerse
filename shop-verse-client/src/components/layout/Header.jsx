@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { FiShoppingCart } from "react-icons/fi";
 import { useAuth } from "../context/auth";
 import { useCart } from "../context/cartContext";
+import SearchInput from "./SearchInput";
 
 export const Header = () => {
   const [auth, setAuth] = useAuth();
@@ -31,14 +32,15 @@ export const Header = () => {
             <NavLink to="/" className="navbar-brand">
               <FiShoppingCart /> ShopVerse
             </NavLink>
+            <SearchInput />
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <NavLink
+                {/* <NavLink
                   to={`/dashboard/${auth?.user?.role === 1 ? "admin" : "user"}`}
                   className={"nav-link"}
                 >
-                  Hello, {auth.user ? auth.user.fName : "User"}
-                </NavLink>
+                  Hello, {auth?.user && auth?.user?.fName}
+                </NavLink> */}
               </li>
               <li className="nav-item">
                 <NavLink to="/" className="nav-link" aria-current="page">
