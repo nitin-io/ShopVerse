@@ -4,6 +4,7 @@ import UserMenu from "../../layout/UserMenu";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useAuth } from "../../context/auth";
+import moment from "moment";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
@@ -37,7 +38,7 @@ const Orders = () => {
             <div className="col-md-10">
               {orders?.map((order, i) => {
                 return (
-                  <table class="table caption-top" key={order._id}>
+                  <table className="table caption-top" key={order._id}>
                     <thead>
                       <tr>
                         <th scope="col">#</th>
@@ -50,7 +51,7 @@ const Orders = () => {
                       <tr>
                         <th scope="row">{i + 1}</th>
                         <td>{order.status}</td>
-                        <td>{order.createdAt}</td>
+                        <td>{moment(order.createdAt).fromNow()}</td>
                         <td>
                           {order.payment?.success
                             ? "Success"

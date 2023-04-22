@@ -4,6 +4,7 @@ import AdminMenu from "../../layout/AdminMenu";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useAuth } from "../../context/auth";
+import moment from "moment";
 import { Select } from "antd";
 const { Option } = Select;
 
@@ -85,7 +86,7 @@ const Orders = () => {
                             ))}
                           </Select>
                         </td>
-                        <td>{order.createdAt}</td>
+                        <td>{moment(order.createdAt).fromNow()}</td>
                         <td>
                           {order.payment?.success
                             ? "Success"

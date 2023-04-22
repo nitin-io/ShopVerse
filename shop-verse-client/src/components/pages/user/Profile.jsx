@@ -30,6 +30,7 @@ const Profile = () => {
 
   useEffect(() => {
     fetchUserDetails();
+    console.log(values?.address?.addressLine);
     getStates();
   }, []);
 
@@ -58,7 +59,6 @@ const Profile = () => {
     const { name, value } = event.target;
 
     setValues((prevValue) => ({ ...prevValue, [name]: value }));
-    console.log(values);
   }
 
   const handleSubmit = async (event) => {
