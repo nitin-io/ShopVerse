@@ -1,8 +1,21 @@
 import React from "react";
 import { useCart } from "./context/cartContext";
 import { toast } from "react-toastify";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import axios from "axios";
+import { useAuth } from "./context/auth";
 
 function Product({ product }) {
+  const [auth] = useAuth();
+
+  const iconPosition = {
+    position: "absolute",
+    right: "5%",
+    top: "5%",
+    cursor: "pointer",
+    color: "blue",
+  };
+
   const [cart, setCart] = useCart();
   return (
     <div
@@ -12,6 +25,28 @@ function Product({ product }) {
         padding: "0",
       }}
     >
+      <AiOutlineHeart
+        style={iconPosition}
+        title="Add To Wishlist"
+        onClick={async () => {
+          try {
+            if (auth?.token) {
+              await axios.put(
+                `${
+                  import.meta.env.VITE_BASE_API_URL_DEV
+                }/api/v1/auth/add-to-wishlist/${product._id}`
+              );
+              toast.success("Added To Wishlist");
+            } else {
+              toast.warn("Login to add product into wishlist");
+            }
+          } catch (err) {
+            console.log(err);
+            toast.error("Something is wrong");
+          }
+        }}
+      />
+
       <img
         src={`${import.meta.env.VITE_BASE_API_URL_DEV}/api/v1/product/images/${
           product._id
@@ -39,7 +74,6 @@ function Product({ product }) {
           >
             Add to Cart
           </button>
-          <button className="btn btn-primary btn-sm m-2">Buy Now</button>
         </div>
       </div>
     </div>

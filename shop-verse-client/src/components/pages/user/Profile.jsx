@@ -30,7 +30,6 @@ const Profile = () => {
 
   useEffect(() => {
     fetchUserDetails();
-    console.log(values?.address?.addressLine);
     getStates();
   }, []);
 

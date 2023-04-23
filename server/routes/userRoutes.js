@@ -8,6 +8,9 @@ import {
   fetchOrdersController,
   fetchAllOrdersController,
   updateOrderStatusController,
+  addToWishlist,
+  fetchWishlist,
+  removeFromWishlist,
 } from "../controllers/userController.js";
 import { isAdmin, verifySignIn } from "../service/authMiddleware.js";
 
@@ -50,6 +53,17 @@ router.put(
   verifySignIn,
   isAdmin,
   updateOrderStatusController
+);
+
+// Wishlist Add, Fetch, and Remove
+router.put("/add-to-wishlist/:productId", verifySignIn, addToWishlist);
+
+router.get("/wishlist", verifySignIn, fetchWishlist);
+
+router.put(
+  "/remove-from-wishlist/:productId",
+  verifySignIn,
+  removeFromWishlist
 );
 
 export default router;

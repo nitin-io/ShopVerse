@@ -16,11 +16,17 @@ const userSchema = new Schema(
     answer: { type: String, required: true, trim: true },
     address: {
       addressLine: { type: String, required: true },
-      zipCode: { type: Number, required: true },
       state: { type: String, required: true },
       city: { type: String, required: true },
       country: { type: String, default: "India" },
+      zipCode: { type: Number, required: true },
     },
+    wishlist: [
+      {
+        type: mongoose.ObjectId,
+        ref: "Product",
+      },
+    ],
     role: { type: Number, default: 0 },
   },
   { timestamps: true }

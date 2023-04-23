@@ -2,7 +2,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Cart from "./pages/Cart";
-import Wishlist from "./pages/Wishlist";
+import Wishlist from "./pages/user/Wishlist";
 import Dashboard from "./pages/user/Dashboard";
 import { PageNotFound } from "./pages/PageNotFound";
 import Login from "./pages/auth/Login";
@@ -49,8 +49,8 @@ function App() {
           <Route path="user/profile" element={<Profile />} />
           <Route path="user/orders" element={<Orders />} />
         </Route>
-        <Route path="/cart" element={<Cart />} />
         <Route path="/wishlist" element={<Wishlist />} />
+        <Route path="/cart" element={<Cart />} />
         <Route path="/*" element={<PageNotFound />} />
       </Routes>
     </>

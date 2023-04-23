@@ -122,7 +122,7 @@ export const loginUser = async (req, res) => {
   }
 
   const token = await generateToken(user._id);
-
+  console.log(user.address);
   res.status(200).json({
     message: "successfully login",
     token,
@@ -275,5 +275,50 @@ export const updateOrderStatusController = async (req, res) => {
     return res
       .status(500)
       .json({ message: "Error while updating order status" });
+  }
+};
+
+export const addToWishlist = async (req, res) => {
+  const { productId } = req.params;
+  try {
+    await usersModel.findByIdAndUpdate(req.user.id, {
+      $addToSet: { wishlist: productId },
+    });
+    return res
+      .status(200)
+      .json({ message: "Successfully Added Product in Wishlist" });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ message: "Error while adding product to the wishlist" });
+  }
+};
+
+export const fetchWishlist = async (req, res) => {
+  try {
+    const wishlist = await usersModel
+      .find({ _id: req.user.id })
+      .select("wishlist")
+      .populate("wishlist", "-images");
+    return res.status(200).json({ wishlist });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Error while fetching wishlist" });
+  }
+};
+
+export const removeFromWishlist = async (req, res) => {
+  const { productId } = req.params;
+  try {
+    await usersModel.findByIdAndUpdate(req.user.id, {
+      $pull: { wishlist: productId },
+    });
+    return res.json({ message: "Product Removed from wishlist" });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ message: "Error while removing product from wishlist" });
   }
 };
