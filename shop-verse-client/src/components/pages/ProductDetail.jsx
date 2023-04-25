@@ -2,11 +2,12 @@ import { Layout } from "../layout/Layout";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useCart } from "../context/cartContext";
 
 const ProductDetail = () => {
   const [product, setProduct] = useState({});
+  const [cart, setCart] = useCart();
   const params = useParams();
-  console.log(params);
 
   const fetchSingleProduct = async () => {
     try {
@@ -47,6 +48,19 @@ const ProductDetail = () => {
                 currency: "INR",
               }).format(product?.price)}
             </h4>
+            <button
+              className="btn btn-primary btn-sm w-25 mx-auto"
+              onClick={() => {
+                setCart([...cart, product]);
+                localStorage.setItem(
+                  "cart",
+                  JSON.stringify([...cart, product])
+                );
+                toast.success("Successfully Added Product in Cart");
+              }}
+            >
+              Add to Cart
+            </button>
           </div>
         </div>
         <hr />
