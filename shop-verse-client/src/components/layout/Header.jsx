@@ -4,6 +4,7 @@ import { FiShoppingCart } from "react-icons/fi";
 import { useAuth } from "../context/auth";
 import { useCart } from "../context/cartContext";
 import SearchInput from "./SearchInput";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 export const Header = () => {
   const [auth, setAuth] = useAuth();
@@ -34,14 +35,6 @@ export const Header = () => {
             </NavLink>
             <SearchInput />
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                {/* <NavLink
-                  to={`/dashboard/${auth?.user?.role === 1 ? "admin" : "user"}`}
-                  className={"nav-link"}
-                >
-                  Hello, {auth?.user && auth?.user?.fName}
-                </NavLink> */}
-              </li>
               <li className="nav-item">
                 <NavLink to="/" className="nav-link" aria-current="page">
                   Home
@@ -108,6 +101,18 @@ export const Header = () => {
           </div>
         </div>
       </nav>
+      <div className="ml-4 bg-dark py-2 px-2">
+        <button
+          class="btn btn-sm btn-outline-light"
+          type="button"
+          title="Filters"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasScrolling"
+          aria-controls="offcanvasScrolling"
+        >
+          <GiHamburgerMenu />
+        </button>
+      </div>
     </>
   );
 };

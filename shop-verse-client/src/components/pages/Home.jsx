@@ -85,56 +85,73 @@ function Home() {
   return (
     <>
       <Layout title={"All Products - ShopVerse"}>
+        <div
+          className="offcanvas offcanvas-start white-transparent-background"
+          data-bs-scroll="true"
+          data-bs-backdrop="false"
+          tabIndex={-1}
+          id="offcanvasScrolling"
+          aria-labelledby="offcanvasScrollingLabel"
+        >
+          <div className="offcanvas-header">
+            <h5 className="offcanvas-title" id="offcanvasScrollingLabel"></h5>
+            <button
+              type="button"
+              className="btn-close"
+              data-bs-dismiss="offcanvas"
+              aria-label="Close"
+            />
+          </div>
+          <div className="offcanvas-body">
+            <div className=" d-flex flex-column">
+              <h5>Filter by category</h5>
+              {categories?.map((category) => {
+                return (
+                  <label key={category._id}>
+                    <input
+                      type="checkbox"
+                      name="category"
+                      value={category._id}
+                      onChange={(e) =>
+                        handleFilter(e.target.checked, category._id)
+                      }
+                    />{" "}
+                    {category.name}
+                  </label>
+                );
+              })}
+            </div>
+            <div className=" d-flex flex-column">
+              <h5>Filter by price</h5>
+              {Prices?.map((price) => {
+                return (
+                  <label key={price._id}>
+                    <input
+                      type="radio"
+                      name="price"
+                      onChange={() => {
+                        setRadio(price.array);
+                      }}
+                    />{" "}
+                    {price.name}
+                  </label>
+                );
+              })}
+            </div>
+            <button
+              className="btn btn-danger btn-sm"
+              onClick={() => {
+                window.location.reload();
+              }}
+            >
+              Reset All Filters
+            </button>
+          </div>
+        </div>
+
         <div className="container-fluid">
           <div className="row">
-            <div className="col-md-3">
-              <div className=" d-flex flex-column">
-                <h5>Filter by category</h5>
-                {categories?.map((category) => {
-                  return (
-                    <label key={category._id}>
-                      <input
-                        type="checkbox"
-                        name="category"
-                        value={category._id}
-                        onChange={(e) =>
-                          handleFilter(e.target.checked, category._id)
-                        }
-                      />{" "}
-                      {category.name}
-                    </label>
-                  );
-                })}
-              </div>
-              <div className=" d-flex flex-column">
-                <h5>Filter by price</h5>
-                {Prices?.map((price) => {
-                  return (
-                    <label key={price._id}>
-                      <input
-                        type="radio"
-                        name="price"
-                        onChange={() => {
-                          setRadio(price.array);
-                        }}
-                      />{" "}
-                      {price.name}
-                    </label>
-                  );
-                })}
-              </div>
-              <button
-                className="btn btn-danger btn-sm"
-                onClick={() => {
-                  window.location.reload();
-                }}
-              >
-                Reset All Filters
-              </button>
-            </div>
-            <div className="col-md-9 mx-auto">
-              {JSON.stringify(radio)}
-              {JSON.stringify(checked)}
+            <div className="mx-auto">
               <div className="container-fluid">
                 <div className="row">
                   {products?.slice(0, productCounter).map((product) => {

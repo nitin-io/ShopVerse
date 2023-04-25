@@ -1,14 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { useAuth } from "../context/auth";
 import Spinner from "../Spinner";
 
 const PrivateRoute = () => {
   const [ok, setOk] = useState(false);
-  const [auth, setAuth] = useAuth();
-  const location = useLocation();
-  const navigate = useNavigate();
+  const [auth] = useAuth();
 
   useEffect(() => {
     async function checkAuth() {
