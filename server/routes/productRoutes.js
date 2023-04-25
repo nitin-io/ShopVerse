@@ -17,7 +17,7 @@ const router = express.Router();
 
 // Public Product Routes
 router.get("/products", allProducts);
-router.get("/products/:slug", singleProduct);
+router.get("/:slug", singleProduct);
 router.get("/images/:pid", imageController);
 
 // Private Post and Put Route to create and

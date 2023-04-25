@@ -4,9 +4,11 @@ import { toast } from "react-toastify";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import axios from "axios";
 import { useAuth } from "./context/auth";
+import { useNavigate } from "react-router-dom";
 
 function Product({ product }) {
   const [auth] = useAuth();
+  const navigate = useNavigate();
 
   const iconPosition = {
     position: "absolute",
@@ -65,7 +67,15 @@ function Product({ product }) {
         </div>
         <div>
           <button
-            className="btn btn-primary btn-sm"
+            className="btn btn-outline-primary btn-sm"
+            onClick={() => {
+              navigate(`/product/${product?.slug}`);
+            }}
+          >
+            More Details
+          </button>
+          <button
+            className="btn btn-primary btn-sm m-1"
             onClick={() => {
               setCart([...cart, product]);
               localStorage.setItem("cart", JSON.stringify([...cart, product]));

@@ -87,6 +87,7 @@ function Home() {
       <Layout title={"All Products - ShopVerse"}>
         <div
           className="offcanvas offcanvas-start white-transparent-background"
+          style={{ width: "23%" }}
           data-bs-scroll="true"
           data-bs-backdrop="false"
           tabIndex={-1}
@@ -103,7 +104,7 @@ function Home() {
             />
           </div>
           <div className="offcanvas-body">
-            <div className=" d-flex flex-column">
+            <div className="d-flex flex-column">
               <h5>Filter by category</h5>
               {categories?.map((category) => {
                 return (
