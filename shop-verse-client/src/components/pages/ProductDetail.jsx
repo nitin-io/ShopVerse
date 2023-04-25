@@ -14,7 +14,6 @@ const ProductDetail = () => {
       const { data } = await axios.get(
         `${import.meta.env.VITE_BASE_API_URL_DEV}/api/v1/product/${params.slug}`
       );
-      console.log(data);
       if (data.success) {
         setProduct(data.product);
       }
@@ -42,7 +41,7 @@ const ProductDetail = () => {
           <div className="col-md-8">
             <h2>{product?.name}</h2>
             <pre>{product?.description}</pre>
-            <h4 className="text-info-emphasis">
+            <h4 className="text-info-emphasis fw-bold">
               {Intl.NumberFormat("en-IN", {
                 style: "currency",
                 currency: "INR",

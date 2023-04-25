@@ -17,7 +17,7 @@ function Home() {
 
   const loadMore = () => {
     setProductCounter(productCounter + 5);
-    if (productCounter >= products.length) {
+    if (productCounter > products.length) {
       setIsAllProductRendered(true);
     } else {
       setIsAllProductRendered(false);
@@ -87,7 +87,7 @@ function Home() {
       <Layout title={"All Products - ShopVerse"}>
         <div
           className="offcanvas offcanvas-start white-transparent-background"
-          style={{ width: "23%" }}
+          style={{ width: "250px" }}
           data-bs-scroll="true"
           data-bs-backdrop="false"
           tabIndex={-1}
@@ -122,7 +122,7 @@ function Home() {
                 );
               })}
             </div>
-            <div className=" d-flex flex-column">
+            <div className="d-flex flex-column">
               <h5>Filter by price</h5>
               {Prices?.map((price) => {
                 return (
@@ -151,31 +151,23 @@ function Home() {
         </div>
 
         <div className="container-fluid">
-          <div className="row">
-            <div className="mx-auto">
-              <div className="container-fluid">
-                <div className="row">
-                  {products?.slice(0, productCounter).map((product) => {
-                    return (
-                      <Product
-                        key={product._id}
-                        id={product._id}
-                        product={product}
-                      />
-                    );
-                  })}
-                </div>
-                {!isAllProductRendered && (
-                  <button
-                    className="btn btn-outline-primary btn-sm m-auto"
-                    onClick={loadMore}
-                  >
-                    Load More
-                  </button>
-                )}
-              </div>
-            </div>
+          <div className="row justify-content-center">
+            {products?.slice(0, productCounter).map((product) => {
+              return (
+                <Product key={product._id} id={product._id} product={product} />
+              );
+            })}
           </div>
+          {!isAllProductRendered && (
+            <div className="w-100 text-center my-3">
+              <button
+                className="btn btn-outline-primary btn-sm"
+                onClick={loadMore}
+              >
+                Load More
+              </button>
+            </div>
+          )}
         </div>
       </Layout>
     </>

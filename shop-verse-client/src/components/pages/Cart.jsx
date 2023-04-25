@@ -115,79 +115,81 @@ function Cart() {
                 })}
               </div>
             </div>
-            <div className="col-md-4">
-              <h5>
-                Products Price:
-                {Intl.NumberFormat("en-IN", {
-                  style: "currency",
-                  currency: "INR",
-                }).format(
-                  cart?.reduce((total, product) => total + product.price, 0)
-                )}
-              </h5>
-              <h5>
-                Total:
-                {Intl.NumberFormat("en-IN", {
-                  style: "currency",
-                  currency: "INR",
-                }).format(
-                  cart?.reduce((total, product) => total + product.price, 0)
-                )}
-              </h5>
-              {auth?.user?.address ? (
-                <>
-                  <div>
-                    <h4>Current Address</h4>
-                    <p>Address: {auth?.user?.address?.addressLine}</p>
-                    <p>City: {auth?.user?.address?.city}</p>
-                    <p>State: {auth?.user?.address?.state}</p>
-                    <p>Zip Code: {auth?.user?.address?.zipCode}</p>
+            {cart.length > 0 && (
+              <div className="col-md-4">
+                <h5>
+                  Products Price:
+                  {Intl.NumberFormat("en-IN", {
+                    style: "currency",
+                    currency: "INR",
+                  }).format(
+                    cart?.reduce((total, product) => total + product.price, 0)
+                  )}
+                </h5>
+                <h5>
+                  Total:
+                  {Intl.NumberFormat("en-IN", {
+                    style: "currency",
+                    currency: "INR",
+                  }).format(
+                    cart?.reduce((total, product) => total + product.price, 0)
+                  )}
+                </h5>
+                {auth?.user?.address ? (
+                  <>
+                    <div>
+                      <h4>Current Address</h4>
+                      <p>Address: {auth?.user?.address?.addressLine}</p>
+                      <p>City: {auth?.user?.address?.city}</p>
+                      <p>State: {auth?.user?.address?.state}</p>
+                      <p>Zip Code: {auth?.user?.address?.zipCode}</p>
+                      <button
+                        className="btn btn-outline-warning"
+                        onClick={() => {
+                          navigate("/dashboard/user/profile");
+                        }}
+                      >
+                        Update Address
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <>
                     <button
                       className="btn btn-outline-warning"
                       onClick={() => {
-                        navigate("/dashboard/user/profile");
+                        navigate("/login", { state: "/cart" });
                       }}
                     >
-                      Update Address
+                      Login To Checkout
                     </button>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <button
-                    className="btn btn-outline-warning"
-                    onClick={() => {
-                      navigate("/login", { state: "/cart" });
-                    }}
-                  >
-                    Login To Checkout
-                  </button>
-                </>
-              )}
-              {!clientToken || !cart?.length ? (
-                ""
-              ) : (
-                <>
-                  <DropIn
-                    options={{
-                      authorization: clientToken,
-                    }}
-                    onInstance={(instance) => {
-                      setDropInInstance(instance);
-                    }}
-                  />
-                  <button
-                    className="btn btn-primary"
-                    onClick={handlePayment}
-                    disabled={
-                      loading || !dropInInstance || !auth?.user?.address
-                    }
-                  >
-                    {loading ? "Processing..." : "Make Payment"}
-                  </button>
-                </>
-              )}
-            </div>
+                  </>
+                )}
+                {!clientToken || !cart?.length ? (
+                  ""
+                ) : (
+                  <>
+                    <DropIn
+                      options={{
+                        authorization: clientToken,
+                      }}
+                      onInstance={(instance) => {
+                        setDropInInstance(instance);
+                      }}
+                    />
+                    <button
+                      className="btn btn-primary"
+                      onClick={handlePayment}
+                      disabled={
+                        loading || !dropInInstance || !auth?.user?.address
+                      }
+                    >
+                      {loading ? "Processing..." : "Make Payment"}
+                    </button>
+                  </>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </Layout>

@@ -29,10 +29,10 @@ export const Header = () => {
           >
             <span className="navbar-toggler-icon" />
           </button>
+          <NavLink to="/" className="navbar-brand">
+            <FiShoppingCart /> ShopVerse
+          </NavLink>
           <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
-            <NavLink to="/" className="navbar-brand">
-              <FiShoppingCart /> ShopVerse
-            </NavLink>
             <SearchInput />
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
               <li className="nav-item">

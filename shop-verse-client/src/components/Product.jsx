@@ -55,36 +55,36 @@ function Product({ product }) {
         }`}
         alt="product"
         height={"200px"}
-        className="card-img-top img-fluid"
+        className="card-img-top object-fit-contain"
       />
       <div className="card-body">
         <h5 className="card-title">{product.name}</h5>
-        <div className="card-text">
+        <div className="card-text text-info-emphasis fw-bold">
           {Intl.NumberFormat("en-IN", {
             style: "currency",
             currency: "INR",
           }).format(product?.price)}
         </div>
-        <div>
-          <button
-            className="btn btn-outline-primary btn-sm"
-            onClick={() => {
-              navigate(`/product/${product?.slug}`);
-            }}
-          >
-            More Details
-          </button>
-          <button
-            className="btn btn-primary btn-sm m-1"
-            onClick={() => {
-              setCart([...cart, product]);
-              localStorage.setItem("cart", JSON.stringify([...cart, product]));
-              toast.success("Successfully Added Product in Cart");
-            }}
-          >
-            Add to Cart
-          </button>
-        </div>
+      </div>
+      <div className="card-footer mx-auto">
+        <button
+          className="btn btn-outline-primary btn-sm"
+          onClick={() => {
+            navigate(`/product/${product?.slug}`);
+          }}
+        >
+          More Details
+        </button>
+        <button
+          className="btn btn-primary btn-sm m-1"
+          onClick={() => {
+            setCart([...cart, product]);
+            localStorage.setItem("cart", JSON.stringify([...cart, product]));
+            toast.success("Successfully Added Product in Cart");
+          }}
+        >
+          Add to Cart
+        </button>
       </div>
     </div>
   );
