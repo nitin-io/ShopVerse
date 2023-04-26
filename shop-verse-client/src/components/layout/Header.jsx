@@ -5,6 +5,8 @@ import { useAuth } from "../context/auth";
 import { useCart } from "../context/cartContext";
 import SearchInput from "./SearchInput";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { Badge } from "antd";
+import { ShoppingCartOutlined } from "@ant-design/icons";
 
 export const Header = () => {
   const [auth, setAuth] = useAuth();
@@ -93,9 +95,11 @@ export const Header = () => {
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink to="/cart" className="nav-link">
-                  Cart({cart?.length})
-                </NavLink>
+                <Badge count={cart?.length}>
+                  <NavLink to="/cart" className="nav-link">
+                    <ShoppingCartOutlined style={{ fontSize: "22px" }} />
+                  </NavLink>
+                </Badge>
               </li>
             </ul>
           </div>
