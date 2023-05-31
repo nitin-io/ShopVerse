@@ -10,20 +10,7 @@ export const Footer = () => {
 
   return (
     <div className="bg-dark text-white p-3 text-center">
-      <p>Copyright &copy; 2023 Nitin Chaudhary</p>
-      <div>
-        <Link to="/about" style={linkStyle}>
-          About
-        </Link>{" "}
-        |{" "}
-        <Link to="/contact" style={linkStyle}>
-          Contact
-        </Link>{" "}
-        |
-        <Link to="/privacy-and-policy" style={linkStyle}>
-          Privacy & Policy
-        </Link>
-      </div>
+      <p style={{ fontSize: "0.7rem" }}>Copyright &copy; 2023 ShopVerse.com</p>
     </div>
   );
 };
