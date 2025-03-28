@@ -34,7 +34,7 @@ app.get("/", async (req, res) => {
   const count = fs.readFileSync("count.txt", "utf-8");
   const newCount = parseInt(count) + 1;
   fs.writeFileSync("count.txt", `${newCount}`);
-  console.log(`Server Visit: ${count}`.bgWhite.green);
+  console.log(`Server Visit: ${newCount}`.bgWhite.green);
 
   res.status(200).json({ message: "It's working!", serverVisit: newCount });
 });
