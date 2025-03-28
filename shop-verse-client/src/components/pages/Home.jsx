@@ -8,21 +8,11 @@ import { useCart } from "../context/cartContext";
 
 function Home() {
   const [products, setProducts] = useState([]);
-  const [isAllProductRendered, setIsAllProductRendered] = useState(false);
-  const [productCounter, setProductCounter] = useState(5);
   const [categories, setCategories] = useState([]);
   const [checked, setChecked] = useState([]);
   const [radio, setRadio] = useState([]);
   const [cart, setCart] = useCart();
 
-  const loadMore = () => {
-    setProductCounter(productCounter + 5);
-    if (productCounter > products.length) {
-      setIsAllProductRendered(true);
-    } else {
-      setIsAllProductRendered(false);
-    }
-  };
 
   const fetchAllProducts = async () => {
     try {
@@ -84,10 +74,10 @@ function Home() {
   }, []);
   return (
     <>
-      <Layout title={"All Products - ShopVerse"}>
+      <Layout title={'All Products - ShopVerse'}>
         <div
           className="offcanvas offcanvas-start white-transparent-background"
-          style={{ width: "250px" }}
+          style={{ width: '250px' }}
           data-bs-scroll="true"
           data-bs-backdrop="false"
           tabIndex={-1}
@@ -116,7 +106,7 @@ function Home() {
                       onChange={(e) =>
                         handleFilter(e.target.checked, category._id)
                       }
-                    />{" "}
+                    />{' '}
                     {category.name}
                   </label>
                 );
@@ -133,7 +123,7 @@ function Home() {
                       onChange={() => {
                         setRadio(price.array);
                       }}
-                    />{" "}
+                    />{' '}
                     {price.name}
                   </label>
                 );
@@ -150,15 +140,45 @@ function Home() {
           </div>
         </div>
 
-        <div className="container-fluid">
-          <div className="row justify-content-center">
-            {products?.slice(0, productCounter).map((product) => {
+        <div className="container-fluid mt-2">
+          <div className="row justify-content-center w-100">
+            {products?.map((product) => {
               return (
                 <Product key={product._id} id={product._id} product={product} />
               );
             })}
           </div>
-          {!isAllProductRendered && (
+          <nav aria-label="Products page navigation" className="w-100 ms-auto d-flex justify-content-center mt-2">
+            <ul className="pagination">
+              <li className="page-item">
+                <a className="page-link" href="#" aria-label="Previous">
+                  <span aria-hidden="true">«</span>
+                </a>
+              </li>
+              <li className="page-item">
+                <a className="page-link" href="#">
+                  1
+                </a>
+              </li>
+              <li className="page-item">
+                <a className="page-link" href="#">
+                  2
+                </a>
+              </li>
+              <li className="page-item">
+                <a className="page-link" href="#">
+                  3
+                </a>
+              </li>
+              <li className="page-item">
+                <a className="page-link" href="#" aria-label="Next">
+                  <span aria-hidden="true">»</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+
+          {/* {!isAllProductRendered && (
             <div className="w-100 text-center my-3">
               <button
                 className="btn btn-outline-primary btn-sm"
@@ -167,7 +187,7 @@ function Home() {
                 Load More
               </button>
             </div>
-          )}
+          )} */}
         </div>
       </Layout>
     </>
