@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { FiShoppingCart } from "react-icons/fi";
 import { useAuth } from "../context/auth";
 import { useCart } from "../context/cartContext";
@@ -11,7 +11,8 @@ import { ShoppingCartOutlined } from "@ant-design/icons";
 export const Header = () => {
   const [auth, setAuth] = useAuth();
   const [cart] = useCart();
-
+  const location = useLocation();
+  console.log(location)
   function handleLogout() {
     setAuth({ ...auth, user: null, token: "" });
     localStorage.removeItem("auth");
@@ -58,7 +59,7 @@ export const Header = () => {
                       <NavLink
                         className="dropdown-item"
                         to={`/dashboard/${
-                          auth?.user?.role === 1 ? "admin" : "user"
+                          auth?.user?.role === 1 ? 'admin' : 'user'
                         }`}
                       >
                         Dashboard
@@ -97,7 +98,7 @@ export const Header = () => {
               <li className="nav-item">
                 <Badge count={cart?.length}>
                   <NavLink to="/cart" className="nav-link">
-                    <ShoppingCartOutlined style={{ fontSize: "22px" }} />
+                    <ShoppingCartOutlined style={{ fontSize: '22px' }} />
                   </NavLink>
                 </Badge>
               </li>
@@ -105,18 +106,21 @@ export const Header = () => {
           </div>
         </div>
       </nav>
-      <div className="ml-4 bg-dark py-2 px-2">
-        <button
-          class="btn btn-sm btn-outline-light"
-          type="button"
-          title="Filters"
-          data-bs-toggle="offcanvas"
-          data-bs-target="#offcanvasScrolling"
-          aria-controls="offcanvasScrolling"
-        >
-          <GiHamburgerMenu />
-        </button>
-      </div>
+      {location.pathname === '/' && (
+        <div className="ml-4 bg-white shadow-sm py-2 px-2">
+          <button
+            class="btn btn-sm btn-outline-primary d-flex justify-content-center align-items-center gap-1"
+            type="button"
+            title="Filters"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasScrolling"
+            aria-controls="offcanvasScrolling"
+          >
+            <GiHamburgerMenu />
+            Filters
+          </button>
+        </div>
+      )}
     </>
   );
 };
