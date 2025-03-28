@@ -95,7 +95,7 @@ export const Header = () => {
                   Wishlist
                 </NavLink>
               </li>
-              <li className="nav-item">
+              <li className={`nav-item d-flex justify-content-center align-items-center ms-1 ${cart?.length ? "border rounded-circle": ""} m-auto w-100 h-100`}>
                 <Badge count={cart?.length}>
                   <NavLink to="/cart" className="nav-link">
                     <ShoppingCartOutlined style={{ fontSize: '22px' }} />
